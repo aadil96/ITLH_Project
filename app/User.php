@@ -5,7 +5,8 @@ namespace App;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use User;
+// use User;
+use Batch;
 
 class User extends Authenticatable
 {
@@ -17,7 +18,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'phone', 'profile_image_url', 'cv_url', 'competencies', 'user_type', 'password',
+        'batch_id', 'name', 'email', 'phone', 'profile_image_url', 'cv_url', 'competencies', 'user_type', 'password',
     ];
 
     /**
@@ -38,8 +39,18 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function batches()
+    public function batch()
     {
-        return $this->belongsTo(Batch::class);
+        return $this->belongsTo('App\Batch');
     }
+
+    public function tags()
+    {
+        $this->hasMany('App\Tag');
+    }
+
+    // public function proposal()
+    // {
+    //     return $this->hasMany('App\Proposal');
+    // }
 }
