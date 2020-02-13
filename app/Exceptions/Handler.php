@@ -60,6 +60,8 @@ class Handler extends ExceptionHandler
 
         $guard = Arr::get($exception->guards(), 0);
 
+        // ddd($guard);
+
         if ($guard == 'client')
         {
             // dd('yes');

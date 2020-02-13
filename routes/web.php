@@ -27,8 +27,8 @@
 	Route::post('/client/register', 'Auth\RegisterController@addClient');
 
 
-	Route::get('/client/login', 'Auth\LoginController@showClientLoginForm')->name('client.login');
-	Route::post('/client/login', 'Auth\LoginController@clientLogin');
+	Route::get('/client/login', 'ClientsLoginController@showClientLoginForm')->name('client.login');
+	Route::post('/client/login', 'ClientsLoginController@clientLogin');
 
 
 	Route::get('/client/home', 'ClientController@index')->name('client.home');
