@@ -20,7 +20,7 @@
 	Auth::routes();
 
 	Route::get('/home', 'HomeController@index')->name('home');
-	// Route::get('/logout', 'HomeController@logout');
+	Route::get('/logout', 'HomeController@logout');
 
 
 	Route::get('/client/register', 'Auth\RegisterController@showClientRegistrationForm');
@@ -35,13 +35,13 @@
 	Route::get('client/logout', 'ClientController@logout');
 	Route::get('/search', 'ClientController@index');
 
-Route::middleware(['auth', 'auth:client'])->group(function () {
+// Route::group(['middleware' => ['auth', 'auth:client']],function () {
 
-	Route::get('/post/assignment', 'AssignmentsController@showPostAssignmentPage');
-	Route::post('/post/assignment', 'AssignmentsController@addAssignment');
-	Route::get('/assignment/{id}', 'AssignmentsController@show');
+	Route::get('/post/assignment', 'AssignmentsController@showPostAssignmentPage')->middleware('auth', 'auth:client');;
+	// Route::post('/post/assignment', 'AssignmentsController@addAssignment');
+	// Route::get('/assignment/{id}', 'AssignmentsController@show');
 
-	 
+	 // Route::get('/home', 'HomeController@index')->name('home');
+	 // Route::get('/client/home', 'ClientController@index')->name('client.home');
 
-
-});
+// });

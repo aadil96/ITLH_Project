@@ -8,18 +8,18 @@ use App\Assignment;
 
 class AssignmentsController extends Controller
 {
-    public function __construct()
-    {
-        // $this->middleware('auth');
-        $this->middleware('auth:client');
-    }
-
+    // public function __construct()
+    // {
+    //     $this->middleware('auth:client');
+    //     // $this->middleware('auth');
+    // }
 
     public function showPostAssignmentPage()
     {
+        // dd(Auth::user());
+        dd('post assignment');
         return view('postAssignment');
     }
-
 
     public function addAssignment(Request $data)
     {

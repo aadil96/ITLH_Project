@@ -8,6 +8,7 @@ use Auth;
 
 class ClientsLoginController extends Controller
 {
+    // protected $guard = 'client';
 	public function __construct()
 	{
 		$this->middleware('guest:client')->except('logout');
@@ -30,7 +31,7 @@ class ClientsLoginController extends Controller
         {
             // dd(Auth::guard('client')->check());
         	// dd('Reached Here');
-        	return redirect()->intended('client.home');
+        	return redirect()->intended(route('client.home'));
         }
 
         return dd('Not there yet');

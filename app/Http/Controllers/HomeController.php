@@ -25,11 +25,13 @@ class HomeController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware('auth:client');
+        // $this->middleware('auth:client');
     }
 
     public function index(Request $request)
     {
+
+        // dd(Auth::user());
         if(empty($request->all())) // View all Assignments
         {
             return view('freelancer', [
