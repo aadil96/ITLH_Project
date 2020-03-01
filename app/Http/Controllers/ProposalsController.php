@@ -17,7 +17,6 @@ class ProposalsController extends Controller
 
     public function show($id)
     {
-        //dd('postProposal');
         $user = Auth::user();
         $assignment = Assignment::where('id',$id)->first();
         return view('postProposal', compact('user', 'assignment'));
@@ -25,18 +24,16 @@ class ProposalsController extends Controller
     
     public function create(Request $data)
     {
-        //$assignment = Assignment::where('id',$data['assignmentId'])->first();
-        //dd($data);
         Proposal::create([
             'user_id' => $data['userId'],
             'assignment_id' => $data['assignmentId'],
             'cover_letter' => $data['coverLetter'],
             'status' => $data['status']
             ]);
-            $email = request('clientEmail');
-            //dd($email);
         
-        Mail::raw('message',function($message){
+    // Send a mail to the client when user submits a proposal
+        
+        Mail::raw('There is a new application waiting for your approval',function($message){
            
             $message->to(request('clientEmail'));
         });

@@ -5,8 +5,9 @@
     @section('content')
         
         <h2>Submit Proposal</h2>
-{{$user->id}}
-{{$assignment->client->email}}
+
+            {{$user->id}}<br>
+            {{$assignment->client->email}}
 
         <form action="/post/proposal"  method="post" class='form-group'>
             @csrf
