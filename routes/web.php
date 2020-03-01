@@ -35,11 +35,15 @@
 	Route::get('client/logout', 'ClientController@logout');
 	Route::get('/search', 'ClientController@index');
 
+
+    Route::get('{assignmentId}/post/proposal', 'ProposalsController@show');
+    Route::post('post/proposal', 'ProposalsController@create');
+
 // Route::group(['middleware' => ['auth', 'auth:client']],function () {
 
 	Route::get('/post/assignment', 'AssignmentsController@showPostAssignmentPage')->middleware('auth', 'auth:client');;
 	// Route::post('/post/assignment', 'AssignmentsController@addAssignment');
-	// Route::get('/assignment/{id}', 'AssignmentsController@show');
+	Route::get('/assignment/{id}', 'AssignmentsController@show')->middleware('auth:web,client');
 
 	 // Route::get('/home', 'HomeController@index')->name('home');
 	 // Route::get('/client/home', 'ClientController@index')->name('client.home');

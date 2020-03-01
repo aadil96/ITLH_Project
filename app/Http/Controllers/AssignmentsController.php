@@ -60,6 +60,6 @@ class AssignmentsController extends Controller
 
         $assignment = Assignment::where('id', $id)->first();
 
-        return view('viewAssignment', compact('assignment'));
+        return view('viewAssignment', compact('assignment',));
     }
 }
