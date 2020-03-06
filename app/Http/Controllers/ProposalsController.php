@@ -33,10 +33,10 @@ class ProposalsController extends Controller
         
     // Send a mail to the client when user submits a proposal
         
-        Mail::raw('There is a new application waiting for your approval',function($message){
-           
-            $message->to(request('clientEmail'));
-        });
+        /*
+        Mail::to(request('clientEmail'))
+            ->send(new ProposalEmail());
+            */
             
         return redirect(route('home'));
     }
