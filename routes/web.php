@@ -36,8 +36,10 @@
 	Route::get('/search', 'ClientController@index');
 
 
-    Route::get('{assignmentId}/post/proposal', 'ProposalsController@show');
+    Route::get('{assignmentId}/post/proposal', 'ProposalsController@showPostProposalPage');
     Route::post('post/proposal', 'ProposalsController@create');
+    Route::get('/proposals', 'ProposalsController@ProposalsPage')->middleware('auth:client');
+    Route::get('/proposal/{proposalId}', 'ProposalsController@showSelectedProposal')->middleware('auth:client');
 
 // Route::group(['middleware' => ['auth', 'auth:client']],function () {
 

@@ -18,7 +18,7 @@
 
 
          @auth('client')
-             <a href="#">View Proposals</a>
+             <a href="/proposals">View Proposals</a>
          @endauth
 
 @endsection

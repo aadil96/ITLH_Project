@@ -15,7 +15,7 @@ class ProposalsController extends Controller
          $this->middleware ('auth');
     }
 
-    public function show($id)
+    public function showPostProposalPage($id)
     {
         $user = Auth::user();
         $assignment = Assignment::where('id',$id)->first();
@@ -39,5 +39,17 @@ class ProposalsController extends Controller
             */
             
         return redirect(route('home'));
+    }
+
+    public function ProposalsPage()
+    {
+        $proposals = Proposal::get();
+        return view('show-proposals', compact('proposals'));
+    }
+
+    public function showSelectedProposal($id)
+    {
+        $proposal = Proposal::where('id', $id)->first();  
+        return view('selected-proposal', compact('proposal'));
     }
 }
