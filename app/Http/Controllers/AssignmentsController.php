@@ -17,8 +17,8 @@ class AssignmentsController extends Controller
     public function showPostAssignmentPage()
     {
         // dd(Auth::user());
-        dd('post assignment');
-        return view('postAssignment');
+        // dd('post assignment');
+        return view('clientPartials.postAssignment');
     }
 
     public function addAssignment(Request $data)
@@ -60,6 +60,6 @@ class AssignmentsController extends Controller
 
         $assignment = Assignment::where('id', $id)->first();
 
-        return view('viewAssignment', compact('assignment',));
+        return view('freelancerPartials.viewAssignment', compact('assignment',));
     }
 }

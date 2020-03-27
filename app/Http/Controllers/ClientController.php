@@ -19,7 +19,7 @@ class ClientController extends Controller
     {
         if(empty($request->all())) // View all Assignments
         {
-            return view('client', [
+            return view('clientPartials.client', [
                 'assignments' => Assignment::orderBy('id', 'desc')->paginate(5),
                 'user' => Auth::user(),
             ]);
@@ -28,7 +28,7 @@ class ClientController extends Controller
 
         elseif ($request['search'] == '') // if blank search then view all assignment
         {
-            return view('client', [
+            return view('clientPartials.client', [
                 'assignments' => Assignment::latest()->paginate(5),
                 'user' => Auth::user(),
             ]);
@@ -39,7 +39,7 @@ class ClientController extends Controller
         {
             $search = $request['search'];
 
-            return view('client', [
+            return view('clientPartials.client', [
                 'assignments' => Assignment::where('title', 'LIKE', '%' . $search . '%')
                                                 ->orWhere('company_name', 'LIKE', '%' . $search . '%')
                                                 ->orderBy('id', 'desc')

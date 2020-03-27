@@ -1,6 +1,14 @@
 @extends('layouts.app')
 
+@section('title')
+	Proposals
+@endsection
+
 @section('content')
+
+	<div class="container mb-5">
+		<h1>Proposals</h1>
+	</div>
 
 
 	@if($proposals->count() > 0)	

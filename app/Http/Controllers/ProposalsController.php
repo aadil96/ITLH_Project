@@ -44,12 +44,12 @@ class ProposalsController extends Controller
     public function ProposalsPage()
     {
         $proposals = Proposal::get();
-        return view('show-proposals', compact('proposals'));
+        return view('clientPartials.show-proposals', compact('proposals'));
     }
 
     public function showSelectedProposal($id)
     {
         $proposal = Proposal::where('id', $id)->first();  
-        return view('selected-proposal', compact('proposal'));
+        return view('clientPartials.selected-proposal', compact('proposal'));
     }
 }

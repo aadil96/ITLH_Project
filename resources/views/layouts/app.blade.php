@@ -6,7 +6,7 @@
 
     <!-- CSRF token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Freelance Marketplace</title>
+    <title>@yield('title','Freelance Marketplace')</title>
 
     <!-- Scripts -->
     <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
@@ -30,24 +30,30 @@
 <body>
 
 <style type="text/css">
-    nav {
+    
+    nav 
+    {
         font-weight: 900;
     }
 
-    .login, .signup {
+    .login, .signup 
+    {
         font-size: 17px;
         color: #626569;
     }
 
-    .home, .logout {
+    .home, .logout 
+    {
         font-size: 17px;
         color: #626569;
     }
 
-    .signup {
+    .signup 
+    {
         margin-left: 30px;
         margin-right: 15px;
     }
+
 </style>
 
 <!-- NAVBAR -->
