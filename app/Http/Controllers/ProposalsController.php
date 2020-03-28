@@ -52,4 +52,11 @@ class ProposalsController extends Controller
         $proposal = Proposal::where('id', $id)->first();  
         return view('clientPartials.selected-proposal', compact('proposal'));
     }
+
+    public function approve($id)
+    {
+        $proposal = Proposal::where('id', $id)->update(['status' => 'active']);
+
+        return redirect(route('client.home'));
+    }
 }

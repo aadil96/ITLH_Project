@@ -7,7 +7,7 @@
 @section('content')
 
 <style type="text/css">
-	
+
 	#approve,#reject
 	{
 		padding: 10px;
@@ -16,7 +16,7 @@
 	}
 
 </style>
-	
+
 	<div class="container">
 		<h5>Applicant name:</h5>
 			<strong>{{ucfirst($proposal->user->name)}} - </strong>
@@ -30,8 +30,13 @@
 	</div>
 
 	<div class="container mt-5">
-		<button class="btn btn-dark ml-3 mt-3" id="approve">Approve</button>
-		<button class="btn btn-light border-dark ml-3 mt-3" id="reject">Reject</button>
+
+		<form action="/proposal/{{$proposal->id}}/approve" method="post">
+			@csrf
+			<button class="btn btn-dark ml-3 mt-3" id="approve">Approve</button>
+			<button class="btn btn-light border-dark ml-3 mt-3" id="reject">Reject</button>
+		</form>
+
 	</div>
 
 @endsection

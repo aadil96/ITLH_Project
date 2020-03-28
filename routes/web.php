@@ -11,35 +11,34 @@
 |
 */
 
+Route::get('/', function () {
+    return view('index');
+});
 
-   
-	Route::get('/', function () {
-	    return view('index');
-	});
+Auth::routes();
 
-	Auth::routes();
+Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/logout', 'HomeController@logout');
 
-	Route::get('/home', 'HomeController@index')->name('home');
-	Route::get('/logout', 'HomeController@logout');
-
-
-	Route::get('/client/register', 'Auth\RegisterController@showClientRegistrationForm');
-	Route::post('/client/register', 'Auth\RegisterController@addClient');
+Route::get('/client/register', 'Auth\RegisterController@showClientRegistrationForm');
+Route::post('/client/register', 'Auth\RegisterController@addClient');
 
 
-	Route::get('/client/login', 'ClientsLoginController@showClientLoginForm')->name('client.login');
-	Route::post('/client/login', 'ClientsLoginController@clientLogin');
+Route::get('/client/login', 'ClientsLoginController@showClientLoginForm')->name('client.login');
+Route::post('/client/login', 'ClientsLoginController@clientLogin');
 
 
-	Route::get('/client/home', 'ClientController@index')->name('client.home');
-	Route::get('client/logout', 'ClientController@logout');
-	Route::get('/search', 'ClientController@index');
+Route::get('/client/home', 'ClientController@index')->name('client.home');
+Route::get('client/logout', 'ClientController@logout');
+Route::get('/search', 'ClientController@index');
 
 
-    Route::get('{assignmentId}/post/proposal', 'ProposalsController@showPostProposalPage');
-    Route::post('post/proposal', 'ProposalsController@create');
-    Route::get('/proposals', 'ProposalsController@ProposalsPage')->middleware('auth:client');
-    Route::get('/proposal/{proposalId}', 'ProposalsController@showSelectedProposal')->middleware('auth:client');
+Route::get('{assignmentId}/post/proposal', 'ProposalsController@showPostProposalPage');
+Route::post('post/proposal', 'ProposalsController@create');
+Route::get('/proposals', 'ProposalsController@ProposalsPage')->middleware('auth:client');
+Route::get('/proposal/{proposalId}', 'ProposalsController@showSelectedProposal')->middleware('auth:client');
+Route::post('/proposal/{proposalId}/approve', 'ProposalsController@approve')->middleware('auth:client');
+
 
 // Route::group(['middleware' => ['auth', 'auth:client']],function () {
 
