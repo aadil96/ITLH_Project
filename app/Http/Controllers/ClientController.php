@@ -19,27 +19,29 @@ class ClientController extends Controller
     {
         if(empty($request->all())) // View all Assignments
         {
-            return view('clientPartials.client', [
-                'assignments' => Assignment::orderBy('id', 'desc')->paginate(5),
+            return view('clientPartials.client',
+            [
+                'assignments' => Assignment::where('status', 'Pending Approval')
+                                                        ->orderBy('id', 'desc')
+                                                        ->paginate(5),
                 'user' => Auth::user(),
             ]);
         }
-
-
         elseif ($request['search'] == '') // if blank search then view all assignment
         {
-            return view('clientPartials.client', [
-                'assignments' => Assignment::latest()->paginate(5),
-                'user' => Auth::user(),
-            ]);
+            return view('clientPartials.client',
+                            [
+                                'assignments' => Assignment::latest()
+                                                        ->paginate(5),
+                                'user' => Auth::user(),
+                            ]);
         }
-
-
         else // Return search results
         {
             $search = $request['search'];
 
-            return view('clientPartials.client', [
+            return view('clientPartials.client',
+            [
                 'assignments' => Assignment::where('title', 'LIKE', '%' . $search . '%')
                                                 ->orWhere('company_name', 'LIKE', '%' . $search . '%')
                                                 ->orderBy('id', 'desc')
@@ -48,10 +50,8 @@ class ClientController extends Controller
                 'message' => 'No assignments found with title "' .$search. '"',
             ]);
         }
-        
-    }
 
-    
+    }
 
     public function logout()
     {

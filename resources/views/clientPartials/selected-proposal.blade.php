@@ -29,11 +29,15 @@
 		{{ $proposal->cover_letter }}
 	</div>
 
-	<div class="container mt-5">
+	<div class="d-flex container mt-5">
 
-		<form action="/proposal/{{$proposal->id}}/approve" method="post">
+		<form action="/assignment/{{$proposal->assignment_id}}/proposal/{{$proposal->id}}/approve" method="post">
 			@csrf
 			<button class="btn btn-dark ml-3 mt-3" id="approve">Approve</button>
+		</form>
+
+		<form action="/assignment/{{$proposal->assignment_id}}/proposal/{{$proposal->id}}/reject" method="post">
+			@csrf
 			<button class="btn btn-light border-dark ml-3 mt-3" id="reject">Reject</button>
 		</form>
 

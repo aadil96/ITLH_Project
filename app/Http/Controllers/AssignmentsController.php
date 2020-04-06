@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Assignment;
+use App\Proposal;
 
 class AssignmentsController extends Controller
 {
@@ -53,13 +54,15 @@ class AssignmentsController extends Controller
 
         return redirect('/client/home');
     }
-    
+
 
     public function show($id)
     {
 
         $assignment = Assignment::where('id', $id)->first();
 
-        return view('freelancerPartials.viewAssignment', compact('assignment',));
+        $proposals = Proposal::where('assignment_id', $id)->get();
+
+        return view('freelancerPartials.viewAssignment', compact('assignment', 'proposals'));
     }
 }

@@ -34,7 +34,7 @@ class HomeController extends Controller
         // dd(Auth::user());
         if(empty($request->all())) // View all Assignments
         {
-            return view('freelancer', [
+            return view('freelancerPartials.freelancer', [
                 'assignments' => Assignment::orderBy('id', 'desc')->paginate(5),
                 'user' => Auth::user(),
             ]);
@@ -44,7 +44,7 @@ class HomeController extends Controller
 
         elseif ($request['search'] == '') // if blank search then view all assignment
         {
-            return view('freelancer', [
+            return view('freelancerPartials.freelancer', [
                 'assignments' => Assignment::latest()->paginate(5),
                 'user' => Auth::user(),
             ]);
@@ -52,12 +52,12 @@ class HomeController extends Controller
 
 
 
-        
+
         else // Return search results
         {
             $search = $request['search'];
 
-            return view('freelancer', [
+            return view('freelancerPartials.freelancer', [
                 'assignments' => Assignment::where('title', 'LIKE', '%' . $search . '%')
                                                 ->orWhere('company_name', 'LIKE', '%' . $search . '%')
                                                 ->orderBy('id', 'desc')

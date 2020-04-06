@@ -27,6 +27,9 @@
                                        class="col-md-4 col-form-label text-md-right">{{ __('Titile') }}</label>
 
                                 <div class="col-md-6">
+
+                                    <!-- <input type="hidden" value="" -->
+
                                     <input id="title" type="text"
                                            class="form-control @error('title') is-invalid @enderror" name="title"
                                            value="{{ old('title') }}" required autocomplete="title">

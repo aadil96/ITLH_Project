@@ -30,25 +30,25 @@
 <body>
 
 <style type="text/css">
-    
-    nav 
+
+    nav
     {
         font-weight: 900;
     }
 
-    .login, .signup 
+    .login, .signup
     {
         font-size: 17px;
         color: #626569;
     }
 
-    .home, .logout 
+    .home, .logout
     {
         font-size: 17px;
         color: #626569;
     }
 
-    .signup 
+    .signup
     {
         margin-left: 30px;
         margin-right: 15px;
@@ -129,7 +129,7 @@
 </nav>
 
 
-<div class='container mt-5 ml-2'>
+<div class='mt-5 ml-2'>
 
     @yield('content')
 
