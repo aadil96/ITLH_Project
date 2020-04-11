@@ -8,53 +8,68 @@
         }
     </style>
 
-    {{$user->batch->name}}
+    <!-- <div class="row">
+        <div class="col-2">
+            <div class="border rounded">
+                <h2 class="container">Tags</h2>
 
-    <!-- Seacrh Bar -->
+                <div>
+                    <a href="">Company name</a>
+                </div>
+            </div>
 
-    <form action="/home" method="get" role="search">
-        {{ csrf_field() }}
-        <div class="input-group">
-            <input type="text" class="form-control mr-2" name="search"
-                   placeholder="Search users"> <span class="input-group-btn">
-                    <button type="submit" class="btn btn-outline-dark">
-                        <span class="fa fa-search"></span>
-                    </button>
-                </span>
-        </div>
-    </form>
-    <br>
+        </div> -->
 
-    <!-- Dashboard -->
+        <div class="col-8">
 
-    <div class="container">
+            <!-- Seacrh Bar -->
 
-        @if($assignments->count() > 0)
+            <form action="/home" method="get" role="search">
+                {{ csrf_field() }}
+                <div class="input-group">
+                    <input type="text" class="form-control mr-2" name="search"
+                           placeholder="Search job by company name or title"> <span class="input-group-btn">
+                            <button type="submit" class="btn btn-outline-dark">
+                                <span class="fa fa-search"></span>
+                            </button>
+                        </span>
+                </div>
+            </form>
+            <br>
 
-        <table class="table">
+            <!-- Dashboard -->
 
-            @foreach($assignments as $assignment)
+            <div class="">
 
-                <thead>
-                    <th id="heading">{{ $assignment->title }}</th>
-                </thead>
+                @if($assignments->count() > 0)
 
-                <tbody>
+                <table class="table">
 
-                <tr>
-                    <td>{{ substr($assignment->description, 0, 100) }} <a class="d-block text-right" href="/assignment/{{ $assignment->id }}">view assignment</a></td>
-                </tr>
+                    @foreach($assignments as $assignment)
 
-                </tbody>
-            @endforeach
+                        <thead>
+                            <th id="heading">{{ $assignment->title }}</th>
+                        </thead>
 
-        </table>
+                        <tbody>
 
-   @else
-        {{$message ?? '' ?? ''}}
-   @endif
+                        <tr>
+                            <td>{{ substr($assignment->description, 0, 100) }} <a class="d-block text-right" href="/assignment/{{ $assignment->id }}">view assignment</a></td>
+                        </tr>
 
-    {{$assignments->links()}}
+                        </tbody>
+                    @endforeach
+
+                </table>
+
+           @else
+                {{$message ?? '' ?? ''}}
+           @endif
+
+            {{$assignments->links()}}
+
+            </div>
+                </div>
 
     </div>
 

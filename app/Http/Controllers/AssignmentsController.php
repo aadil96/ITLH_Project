@@ -33,11 +33,10 @@ class AssignmentsController extends Controller
             $spec = $time . '-' . $requestedDocument->getClientOriginalName();
 
             $spec = $requestedDocument->storeAs('uploads', $spec, 'public');
-        }
 
-        $tags = explode(',', $data['tag']); // Separates tags
+            $tags = explode(',', $data['tag']); // Separates tags
 
-        $assignment = Assignment::create([
+            $assignments = Assignment::create([
                                         'client_id' => Auth::id(),
                                         'title' => $data['title'],
                                         'description' => $data['dscrpt'],
@@ -50,7 +49,28 @@ class AssignmentsController extends Controller
                                         'status' => $data['status'],
         ]);
 
-        $assignment->tag($tags);
+        $assignments->tag($tags);
+        }
+        elseif (!$data->hasFile('specs')) 
+        {
+            $tags = explode(',', $data['tag']);
+
+            $assignments = Assignment::create([
+                            'client_id' => Auth::id(),
+                            'title' => $data['title'],
+                            'description' => $data['dscrpt'],
+                            'turn_around_time' => $data['tat'],
+                            'company_name' => $data['cmpny'],
+                            'cost_low' => $data['costLow'],
+                            'cost_high' => $data['costHigh'],
+                            'tags' => $data['tag'],
+            ]);
+
+            $assignments->tag($tags);
+
+        }
+
+
 
         return redirect('/client/home');
     }
@@ -59,10 +79,10 @@ class AssignmentsController extends Controller
     public function show($id)
     {
 
-        $assignment = Assignment::where('id', $id)->first();
+        $assignment = Assignment::where('id', $id)->with('tagged')->first();
 
         $proposals = Proposal::where('assignment_id', $id)->get();
 
-        return view('freelancerPartials.viewAssignment', compact('assignment', 'proposals'));
+        return view('assignment', compact('assignment', 'proposals'));
     }
 }

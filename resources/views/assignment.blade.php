@@ -14,7 +14,7 @@
                     src="/storage/{{$assignment->specification_document_url}}"
                     height="300"
                     width="300"
-                    alt="">
+                    alt="! No specification document uploaded">
             </div>
 
             <div class="container mt-5">
@@ -42,6 +42,20 @@
                     </div>
 
                 </div>
+
+                <div>
+                    <ul>
+                        <!-- <li> -->
+                                @foreach($assignment->tagNames as $tag)
+                                    <li>
+                                        {{$tag}}
+                                    </li>
+
+                                @endforeach
+                        <!-- </li> -->
+                    </ul>
+                </div>
+
             </div>
 
         </div>

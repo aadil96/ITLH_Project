@@ -35,11 +35,14 @@ class RegisterController extends Controller
 
     protected function create(array $data)
     {
+
+        // ddd($data);
         $request = request();
 
         // Store files from uploads to public with specified name
 
-        if ($request->hasFile('cv') || $request->hasFile('profileImg')) {
+        if ($request->hasFile('cv') || $request->hasFile('profileImg'))
+        {
             $requestedProfileImage = $request->file('profileImg');
             $requestedCvImage = $request->file('cv');
             $time = time();
@@ -49,19 +52,37 @@ class RegisterController extends Controller
 
             $profileImage = $requestedProfileImage->storeAs('uploads', $profileImage, 'public');
             $cv = $requestedProfileImage->storeAs('uploads', $cv, 'public');
-        }
 
-        return User::create([
-            'batch_id' => $data['batch'],
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'phone' => $data['phone'],
-            'profile_image_url' => $profileImage, // Store file path in database
-            'cv_url' => $cv, // Store file path in database
-            'competencies' => $data['cmpt'],
-            'password' => bcrypt($data['password']),
-        ]);
+            return User::create(
+            [
+                'batch_id' => $data['batch'],
+                'name' => $data['name'],
+                'email' => $data['email'],
+                'phone' => $data['phone'],
+                'profile_image_url' => $profileImage, // Store file path in database
+                'cv_url' => $cv, // Store file path in database
+                'competencies' => $data['cmpt'],
+                'password' => bcrypt($data['password']),
+            ]);
+
+
+
+        }
+        elseif (!$request->hasFile('cv') || !$request->hasFile('profileImg')) 
+        {
+           return User::create(
+                [
+                    'batch_id' => $data['batch'],
+                    'name' => $data['name'],
+                    'email' => $data['email'],
+                    'phone' => $data['phone'],
+                    'competencies' => $data['cmpt'],
+                    'password' => bcrypt($data['password']),
+                ]);
+        }
     }
+
+        
 
     public function showRegistrationForm()
     {

@@ -9,6 +9,16 @@
 {{--@endsection--}}
 
 @section('content')
+
+<style>
+
+    .mandatory
+    {
+        color: red;
+    }
+    
+</style>
+
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
@@ -46,6 +56,8 @@
 
                         <!-- </div> -->
 
+                        <em class="mandatory">Inputs marked * are mandatory</em>
+
                         <form action="{{ route('register') }}" enctype="multipart/form-data" method="post">
 
                             @csrf
@@ -66,7 +78,9 @@
                             </div>
 
                             <div class="form-group row">
-                                <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
+                                <label for="name" class="col-md-4 col-form-label text-md-right">
+                                    {{ __('Name') }} <p class="mandatory">*</p>
+                                </label>
 
                                 <div class="col-md-6">
                                     <input id="name" type="text"
@@ -83,7 +97,9 @@
 
                             <div class="form-group row">
                                 <label for="email"
-                                       class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
+                                       class="col-md-4 col-form-label text-md-right">
+                                        {{ __('E-Mail Address') }} <p class="mandatory">*</p>
+                                   </label>
 
                                 <div class="col-md-6">
                                     <input id="email" type="email"
@@ -105,7 +121,7 @@
                                 <div class="col-md-6">
                                     <input id="phone" type="number"
                                            class="form-control @error('phone') is-invalid @enderror" name="phone"
-                                           value="{{ old('phone') }}" required autocomplete="phone">
+                                           value="{{ old('phone') }}" autocomplete="phone">
 
                                     @error('phone')
                                     <span class="invalid-feedback" role="alert">
@@ -154,7 +170,7 @@
                                 <div class="col-md-6">
                                     <input id="cmpt" type="text"
                                            class="form-control @error('cmpt') is-invalid @enderror" name="cmpt"
-                                           value="{{ old('cmpt') }}" required autocomplete="cmpt">
+                                           value="{{ old('cmpt') }}" autocomplete="cmpt">
 
                                     @error('cmpt')
                                     <span class="invalid-feedback" role="alert">
@@ -166,7 +182,9 @@
 
                             <div class="form-group row">
                                 <label for="password"
-                                       class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
+                                       class="col-md-4 col-form-label text-md-right">
+                                       {{ __('Password') }} <p class="mandatory">*</p>
+                                </label>
 
                                 <div class="col-md-6">
                                     <input id="password" type="password"
@@ -183,7 +201,9 @@
 
                             <div class="form-group row">
                                 <label for="password-confirm"
-                                       class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}</label>
+                                       class="col-md-4 col-form-label text-md-right">
+                                       {{ __('Confirm Password') }} <p class="mandatory">*</p>
+                                   </label>
 
                                 <div class="col-md-6">
                                     <input id="password-confirm" type="password" class="form-control"

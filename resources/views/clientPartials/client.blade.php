@@ -8,8 +8,31 @@
         }
     </style>
 
+    <div class="row">
+        <div class="col-3">
+            <div class="border rounded">
+                <h2 class="container border-bottom">Tags</h2>
 
-    <form action="/client/home" method="get" role="search">
+                <div class="alert">
+                    <ul>
+                        <!-- <li> -->
+                            @foreach($assignments as $assignment)
+                                @foreach($assignment->tagNames as $tag)
+                                    <li>
+                                        {{$tag}}
+                                    </li>
+
+                                @endforeach
+                            @endforeach
+                        <!-- </li> -->
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="col-6">
+            <form action="/client/home" method="get" role="search">
         {{ csrf_field() }}
         <div class="input-group">
             <input type="text" class="form-control mr-2" name="search"
@@ -51,6 +74,15 @@
    @endif
 
     {{$assignments->links()}}
+        </div>
+
+        <div class="col-3">
+            
+        </div>
+    </div>
+
+
+    
 
     <script type="text/javascript">
 

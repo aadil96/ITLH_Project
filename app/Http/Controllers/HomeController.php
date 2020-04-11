@@ -39,9 +39,6 @@ class HomeController extends Controller
                 'user' => Auth::user(),
             ]);
         }
-
-
-
         elseif ($request['search'] == '') // if blank search then view all assignment
         {
             return view('freelancerPartials.freelancer', [
@@ -49,10 +46,6 @@ class HomeController extends Controller
                 'user' => Auth::user(),
             ]);
         }
-
-
-
-
         else // Return search results
         {
             $search = $request['search'];

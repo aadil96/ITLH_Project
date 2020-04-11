@@ -66,7 +66,7 @@
                                 <div class="col-md-6">
                                     <input id="specs" type="file"
                                            class="form-control @error('specs') is-invalid @enderror" name="specs"
-                                           value="{{ old('specs') }}" required>
+                                           value="{{ old('specs') }}">
 
                                     @error('specs')
                                     <span class="invalid-feedback" role="alert">
@@ -146,22 +146,7 @@
                                 <!-- </form> -->
                             </div>
 
-                            <div class="form-group row">
-                                <label for="status"
-                                       class="col-md-4 col-form-label text-md-right">{{ __('Status') }}</label>
 
-                                <div class="col-md-6">
-                                    <input id="status" type="text"
-                                           class="form-control @error('status') is-invalid @enderror" name="status"
-                                           value="{{ old('status') }}" required autocomplete="status">
-
-                                    @error('status')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
-                                </div>
-                            </div>
 
                             <div class="form-group row mb-0">
                                 <div class="col-md-8 offset-md-4">
