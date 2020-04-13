@@ -2,6 +2,19 @@
 
 @section('content')
 
+<style type="text/css">
+    .tagList
+    {
+        /*background-color: gray;*/
+        display: inline-block;    
+        width: max-content;
+        margin: 5px;
+        /*border: 2px solid gray;*/
+        border-radius: 5px;
+        padding: 5px;
+    }
+</style>
+
     <div class="row">
         <div class="col-8">
 
@@ -43,17 +56,22 @@
 
                 </div>
 
-                <div>
-                    <ul>
-                        <!-- <li> -->
-                                @foreach($assignment->tagNames as $tag)
-                                    <li>
-                                        {{$tag}}
-                                    </li>
+                <div class="col-4">
+                    <div class="mt-5 container">
+                        
+                        <ul class="">
+                            <h4>Skills required:</h4>
+                            <!-- <li> -->
+                                    @foreach($assignment->tagNames as $tag)
+                                        <li class="tagList alert-secondary">
+                                            {{$tag}}
+                                        </li>
 
-                                @endforeach
-                        <!-- </li> -->
-                    </ul>
+                                    @endforeach
+                            <!-- </li> -->
+                        </ul>
+                        
+                    </div>
                 </div>
 
             </div>

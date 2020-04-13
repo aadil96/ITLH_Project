@@ -64,9 +64,6 @@ class RegisterController extends Controller
                 'competencies' => $data['cmpt'],
                 'password' => bcrypt($data['password']),
             ]);
-
-
-
         }
         elseif (!$request->hasFile('cv') || !$request->hasFile('profileImg')) 
         {
@@ -81,8 +78,6 @@ class RegisterController extends Controller
                 ]);
         }
     }
-
-        
 
     public function showRegistrationForm()
     {

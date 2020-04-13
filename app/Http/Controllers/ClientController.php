@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth;
 use App\Assignment;
-use App\Tag;
+use Conner\Tagging\Model\Tag;
 use DB;
 
 class ClientController extends Controller
@@ -26,6 +26,7 @@ class ClientController extends Controller
                                                         ->orderBy('id', 'desc')
                                                         ->paginate(5),
                 'user' => Auth::user(),
+                'tags' => Tag::all(),
             ]);
         }
         elseif ($request['search'] == '') // if blank search then view all assignment
@@ -35,6 +36,7 @@ class ClientController extends Controller
                                 'assignments' => Assignment::latest()
                                                         ->paginate(5),
                                 'user' => Auth::user(),
+                                'tags' => Tag::all(),
                             ]);
         }
         else // Return search results
@@ -45,10 +47,12 @@ class ClientController extends Controller
             [
                 'assignments' => Assignment::where('title', 'LIKE', '%' . $search . '%')
                                                 ->orWhere('company_name', 'LIKE', '%' . $search . '%')
+                                                ->orWhere('tags', 'LIKE', '%'. $search . '%')
                                                 ->orderBy('id', 'desc')
                                                 ->paginate(5),
                 'user' => Auth::user(),
                 'message' => 'No assignments found with title "' .$search. '"',
+                'tags' => Tag::all(),
             ]);
         }
 

@@ -17,8 +17,6 @@ class AssignmentsController extends Controller
 
     public function showPostAssignmentPage()
     {
-        // dd(Auth::user());
-        // dd('post assignment');
         return view('clientPartials.postAssignment');
     }
 

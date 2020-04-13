@@ -9,12 +9,9 @@
     <title>@yield('title','Freelance Marketplace')</title>
 
     <!-- Scripts -->
-    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+    <!-- <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
     @yield('script')
-    <script src="{{ asset('js/app.js') }}" defer></script>
-
-
-    <script type="text/javascript"></script>
+    <script src="{{ asset('js/app.js') }}" defer></script> -->
 
     <!-- Fonts and CSS -->
 
@@ -67,12 +64,22 @@
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <!-- <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a> -->
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Link</a>
-            </li>
+
+                @auth('client')
+                    <li class="nav-item">
+                        <a class="nav-link" href="client/home">Home</a>
+                    </li>
+
+                @endauth
+
+                @auth('web')
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="home">Home</a>
+                    </li>
+
+                @endauth
+
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
                    aria-haspopup="true" aria-expanded="false">
@@ -90,38 +97,21 @@
             </li>
         </ul>
 
-    <!-- @if (Route::has('login'))
-        @auth
-            <a href="{{ url('/home') }}">Login</a>
-                @else
-            <a href="{{ route('login') }}">Login</a>
-
-                    @if (Route::has('register'))
-                <a href="{{ route('register') }}">Register</a>
-                    @endif
-        @endauth
-
-    @endif
-        -->
-        @if (! auth()->user())
+        @if (! auth()->user('web') || ! auth()->user('client'))
             <a class="login" href="{{ route('login') }}">Login</a>
             <a class="signup" href="{{ route('register') }}">Sign up</a>
 
             {{--  <a class="login" href="/login">Login</a>
              <a class="signup" href="/register">Sign up</a> --}}
 
-        @elseif (auth()->user())
+        @elseif (auth()->user('web'))
 
-            <a class="home mr-3" href="/">Home</a>
-            <!-- <a class="logout" href="/logout">Logout</a> -->
-            <form method="post" action="/logout">
-                @csrf
-                <button type="submit">logout</button>
-            </form>
+            <a class="home mr-3" href="home">Home</a>
+            <a class="logout" href="/logout">Logout</a>
 
         @elseif (auth()->user() == 'client')
 
-            <a class="home mr-3" href="/">Home</a>
+            <a class="home mr-3" href="client/home">Home</a>
             <a class="logout" href="client/logout">Logout</a>
 
         @endif

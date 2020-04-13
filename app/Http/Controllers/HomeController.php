@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
+use Conner\Tagging\Model\Tag;
 use App\User;
 use App\Client;
 use App\Batch;
@@ -30,13 +30,12 @@ class HomeController extends Controller
 
     public function index(Request $request)
     {
-
-        // dd(Auth::user());
         if(empty($request->all())) // View all Assignments
         {
             return view('freelancerPartials.freelancer', [
                 'assignments' => Assignment::orderBy('id', 'desc')->paginate(5),
                 'user' => Auth::user(),
+                'tags' => Tag::all(),
             ]);
         }
         elseif ($request['search'] == '') // if blank search then view all assignment
@@ -44,6 +43,7 @@ class HomeController extends Controller
             return view('freelancerPartials.freelancer', [
                 'assignments' => Assignment::latest()->paginate(5),
                 'user' => Auth::user(),
+                'tags' => Tag::all(),
             ]);
         }
         else // Return search results
@@ -57,6 +57,7 @@ class HomeController extends Controller
                                                 ->paginate(5),
                 'user' => Auth::user(),
                 'message' => 'No assignments found with title "' .$search. '"',
+                'tags' => Tag::all(),
             ]);
         }
     }

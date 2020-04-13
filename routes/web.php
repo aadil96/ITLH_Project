@@ -11,6 +11,22 @@
 |
 */
 
+Route::get('client/profile/{id}', function ($id){
+
+	$client = \App\Client::where('id', $id)->first();
+	$assignment = \App\Assignment::where('id', $id)->first();
+
+	return view('client-profile', compact('client', 'assignment'));
+});
+
+Route::get('profile/{id}', function ($id){
+
+	$user = \App\User::where('id', $id)->first();
+	$assignment = \App\Assignment::where('id', $id)->first();
+
+	return view('freelancer-profile', compact('user', 'assignment'));
+});
+
 Route::get('/', function () {
     return view('index');
 });
@@ -30,8 +46,7 @@ Route::post('/client/login', 'ClientsLoginController@clientLogin');
 
 Route::get('/client/home', 'ClientController@index')->name('client.home');
 Route::get('client/logout', 'ClientController@logout');
-Route::get('/search', 'ClientController@index');
-
+// Route::get('/search', 'ClientController@index');
 
 Route::get('{assignmentId}/post/proposal', 'ProposalsController@showPostProposalPage');
 Route::post('post/proposal', 'ProposalsController@create');
