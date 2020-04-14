@@ -81,7 +81,7 @@
                                        class="col-md-4 col-form-label text-md-right">{{ __('Turn Around Time') }}</label>
 
                                 <div class="col-md-6">
-                                    <input id="tat" type="text"
+                                    <input id="tat" type="number"
                                            class="form-control @error('tat') is-invalid @enderror" name="tat"
                                            value="{{ old('tat') }}" required autocomplete="tat">
 
@@ -98,7 +98,7 @@
                                        class="col-md-4 col-form-label text-md-right">{{ __('Cost Low') }}</label>
 
                                 <div class="col-md-6">
-                                    <input id="costLow" type="text"
+                                    <input id="costLow" type="number"
                                            class="form-control @error('costLow') is-invalid @enderror" name="costLow"
                                            value="{{ old('costLow') }}" required autocomplete="costLow">
 
@@ -115,7 +115,7 @@
                                        class="col-md-4 col-form-label text-md-right">{{ __('Cost High') }}</label>
 
                                 <div class="col-md-6">
-                                    <input id="costHigh" type="text"
+                                    <input id="costHigh" type="number"
                                            class="form-control @error('costHigh') is-invalid @enderror" name="costHigh"
                                            value="{{ old('costHigh') }}" required autocomplete="costHigh">
 

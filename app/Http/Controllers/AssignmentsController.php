@@ -23,6 +23,15 @@ class AssignmentsController extends Controller
     public function addAssignment(Request $data)
     {
 
+        $data->validate([ 
+            'title' => ['required', 'max:125'],
+            'description' => ['required'],
+            'tat' =>['numeric'],
+            'costLow' => ['numeric'],
+            'costHigh' => ['numeric'],
+            'tag' => ['min:3', 'max:12']
+        ]);
+
         if ($data->hasFile('specs'))  // This will blow up if 'entcrpt=multi/data' is not specified in form
         {
             $requestedDocument = $data->file('specs');
@@ -31,7 +40,7 @@ class AssignmentsController extends Controller
             $spec = $time . '-' . $requestedDocument->getClientOriginalName();
 
             $spec = $requestedDocument->storeAs('uploads', $spec, 'public');
-
+ 
             $tags = explode(',', $data['tag']); // Separates tags
 
             $assignments = Assignment::create([

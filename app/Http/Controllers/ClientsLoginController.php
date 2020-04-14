@@ -4,10 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Validation\ValidationException;
 use Auth;
 
 class ClientsLoginController extends Controller
 {
+
+    use AuthenticatesUsers;
     // protected $guard = 'client';
 	public function __construct()
 	{
@@ -34,7 +37,9 @@ class ClientsLoginController extends Controller
         	return redirect()->intended(route('client.home'));
         }
 
-        return dd('Not there yet');
-        // return redirect()->back()->withInputs($validatedRequest);
+        // return dd('Not there yet', $credentials);
+        throw ValidationException::withMessages([
+            $this->username() => [trans('auth.failed')],
+        ]);
     }
 }
