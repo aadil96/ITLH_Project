@@ -39,7 +39,7 @@
         color: #626569;
     }
 
-    .home, .logout
+    .profile, .logout
     {
         font-size: 17px;
         color: #626569;
@@ -67,7 +67,7 @@
 
                 @auth('client')
                     <li class="nav-item">
-                        <a class="nav-link" href="client/home">Home</a>
+                        <a class="nav-link" href="/client/home">Home</a>
                     </li>
 
                 @endauth
@@ -75,26 +75,10 @@
                 @auth('web')
 
                     <li class="nav-item">
-                        <a class="nav-link" href="home">Home</a>
+                        <a class="nav-link" href="/home">Home</a>
                     </li>
 
                 @endauth
-
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-                   aria-haspopup="true" aria-expanded="false">
-                    Dropdown
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">Action</a>
-                    <a class="dropdown-item" href="#">Another action</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#">Something else here</a>
-                </div>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-            </li>
         </ul>
 
         @if (! auth()->user('web') || ! auth()->user('client'))
@@ -104,17 +88,20 @@
             {{--  <a class="login" href="/login">Login</a>
              <a class="signup" href="/register">Sign up</a> --}}
 
-        @elseif (auth()->user('web'))
-
-            <a class="home mr-3" href="home">Home</a>
-            <a class="logout" href="/logout">Logout</a>
-
-        @elseif (auth()->user() == 'client')
-
-            <a class="home mr-3" href="client/home">Home</a>
-            <a class="logout" href="client/logout">Logout</a>
-
         @endif
+
+        @auth('web')
+
+            <a class="profile mr-3" href="/profile/{{Auth::user()->id}}">Profile</a>
+            <a class="logout" href="/logout">Logout</a>
+        @endauth
+
+        @auth('client')
+
+            <a class="profile mr-3" href="/profile/{{Auth::user()->id}}">Profile</a>
+            <a class="logout" href="/client/logout">Logout</a>
+
+        @endauth
     </div>
 </nav>
 

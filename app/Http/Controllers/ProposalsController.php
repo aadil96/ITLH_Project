@@ -7,6 +7,8 @@ use Auth;
 use App\Proposal;
 use App\User;
 use App\Assignment;
+use App\Mail\NewProposal;
+
 
 class ProposalsController extends Controller
 {
@@ -33,12 +35,16 @@ class ProposalsController extends Controller
 
     // Send a mail to the client when user submits a proposal
 
-        /*
-        Mail::to(request('clientEmail'))
-            ->send(new ProposalEmail());
-            */
+        $user = User::where('id', $data['userId'])->first();
+        $assignment = Assignment::where('id', $data['assignmentId'])->first();
 
-        return redirect(route('home'));
+        // dd($user);
+
+        Mail::to(request('clientEmail'))
+            ->send(new NewProposal($user,$assignment));
+
+
+        return redirect(route('assignment', ['id' => $data['assignmentId']]));
     }
 
     public function ProposalsPage($id)

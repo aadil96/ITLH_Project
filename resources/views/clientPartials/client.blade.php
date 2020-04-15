@@ -11,7 +11,7 @@
         .tagList
         {
             /*background-color: gray;*/
-            display: inline-block;    
+            display: inline-block;
             width: max-content;
             margin: 5px;
             list-style-type: none;
@@ -70,11 +70,11 @@
 
                     <!-- Search end -->
 
-                    <a id="post" class="btn btn-dark ml-3 mt-3 mb-5" href="/post/assignment">Post Assignment</a> 
+                    <a id="post" class="btn btn-dark ml-3 mt-3 mb-5" href="{{route('assignment.post')}}">Post Assignment</a>
                     <br>
 
                                                         <!-- Assignments -->
-            
+
                     @if($assignments->count() > 0)
 
                         <table class="table">
@@ -107,10 +107,10 @@
             </div>
         </div>
 
-            
+
 
         <div class="col-lg-2 col-sm-2">
-            
+
         </div>
     </div>
 

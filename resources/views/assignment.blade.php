@@ -6,7 +6,7 @@
     .tagList
     {
         /*background-color: gray;*/
-        display: inline-block;    
+        display: inline-block;
         width: max-content;
         margin: 5px;
         /*border: 2px solid gray;*/
@@ -58,7 +58,7 @@
 
                 <div class="col-4">
                     <div class="mt-5 container">
-                        
+
                         <ul class="">
                             <h4>Skills required:</h4>
                             <!-- <li> -->
@@ -70,7 +70,7 @@
                                     @endforeach
                             <!-- </li> -->
                         </ul>
-                        
+
                     </div>
                 </div>
 
@@ -78,52 +78,54 @@
 
         </div>
 
-        <div class="col-4">
-            <div class="border-left">
-                <h2 class="container">Proposals</h2>
-                @if($proposals->count() > 0)
+        @auth('client')
+            <div class="col-4">
+                <div class="border-left">
+                    <h2 class="container">Proposals</h2>
+                        @if($proposals->count() > 0)
 
-                <table class="table mt-3">
+                            <table class="table mt-3">
 
-                    @foreach($proposals as $proposal)
+                                 @foreach($proposals as $proposal)
 
-                        <thead>
-                            <th id="heading">{{ $proposal->user->name }}</th>
-                        </thead>
+                                    <thead>
+                                        <th id="heading">{{ $proposal->user->name }}</th>
+                                    </thead>
 
-                        <tbody>
+                                    <tbody>
 
-                        <tr>
-                            <td>
-                                {{ substr($proposal->cover_letter, 0, 100) }}
-                                <a
-                                    class="d-block text-right"
-                                    href="/proposal/{{ $proposal->id }}">
-                                    view more
-                                </a>
-                            </td>
-                        </tr>
+                                        <tr>
+                                            <td>
+                                                {{ substr($proposal->cover_letter, 0, 100) }}
+                                                <a
+                                                    class="d-block text-right"
+                                                    href="/proposal/{{ $proposal->id }}">
+                                                    view more
+                                                </a>
+                                            </td>
+                                        </tr>
 
-                        </tbody>
-                    @endforeach
+                                    </tbody>
+                                @endforeach
 
-                </table>
+                            </table>
 
-           @else
-                {{$message ?? '' ?? ''}}
-           @endif
+                        @else
+                            {{$message ?? '' ?? ''}}
+                        @endif
 
-        </div>
+                </div>
+            </div>
+        @endauth
+
     </div>
-
-</div>
 
      <br>
      <br>
 
      @auth('web')
           <a
-            href="/{{$assignment->id}}/post/proposal">
+            href="/assignment/{{$assignment->id}}/proposal/post">
             Apply for this job
         </a>
      @endauth

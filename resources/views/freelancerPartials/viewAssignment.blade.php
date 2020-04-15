@@ -93,7 +93,7 @@
 
          @auth('web')
               <a
-                href="/{{$assignment->id}}/post/proposal">
+                href="/assignment/{{$assignment->id}}/post/proposal">
                 Apply for this job
             </a>
          @endauth

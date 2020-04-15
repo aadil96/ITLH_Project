@@ -11,7 +11,7 @@
         .tagList
         {
             /*background-color: gray;*/
-            display: inline-block;    
+            display: inline-block;
             width: max-content;
             margin: 5px;
             list-style-type: none;
@@ -37,26 +37,24 @@
 
         <div class="row justify-content-center">
 
-            <div class="col-lg-2 col-sm-2 pl-0 pr-0 mr-5">
-            <div class="card">
-                <div class="card-header">Tags</div>
+            <!-- <div class="col-lg-2 col-sm-2 pl-0 pr-0 mr-5">
+                <div class="card">
+                    <div class="card-header">Tags</div>
 
-                <div class="body">
-                    <ul style="padding: 0px;">
-                        <!-- <li> -->
-                            @foreach($tags as $tag)
-                                <li class="tagList alert-secondary">
-                                    <a href="home?search={{$tag->name}}">{{$tag->name}}</a>
-                                </li>
-                            @endforeach
-                        <!-- </li> -->
-                    </ul>
+                    <div class="body">
+                        <ul style="padding: 0px;">
+                                @foreach($tags as $tag)
+                                    <li class="tagList alert-secondary">
+                                        <a href="home?search={{$tag->name}}">{{$tag->name}}</a>
+                                    </li>
+                                @endforeach
+                        </ul>
+                    </div>
+
                 </div>
+            </div> -->
 
-            </div>
-        </div>
-
-            <div class="col-lg-8 col-sm-8">
+            <div class="col-lg-10 col-sm-10">
                 <div class="card">
                     <div class="card-header">Feed</div>
                     <div class="card-body">

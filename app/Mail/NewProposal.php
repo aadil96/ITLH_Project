@@ -11,16 +11,19 @@ class NewProposal extends Mailable
 {
     use Queueable, SerializesModels;
     
-    public $mail;
+    public $user;
+    public $assignment;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($user, $assignment)
     {
-        //
+        $this->user = $user;
+        $this->assignment = $assignment;
+        // dd($user);
     }
 
     /**
@@ -30,6 +33,6 @@ class NewProposal extends Mailable
      */
     public function build()
     {
-        return $this->view('email.new-proposal');
+        return $this->view('mail.new-proposal');
     }
 }

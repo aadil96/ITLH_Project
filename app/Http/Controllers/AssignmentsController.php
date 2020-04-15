@@ -9,11 +9,11 @@ use App\Proposal;
 
 class AssignmentsController extends Controller
 {
-    // public function __construct()
-    // {
-    //     $this->middleware('auth:client');
-    //     // $this->middleware('auth');
-    // }
+    public function __construct()
+    {
+        $this->middleware('auth:client')->except('show');
+        // $this->middleware('auth:web');
+    }
 
     public function showPostAssignmentPage()
     {
@@ -23,7 +23,7 @@ class AssignmentsController extends Controller
     public function addAssignment(Request $data)
     {
 
-        $data->validate([ 
+        $data->validate([
             'title' => ['required', 'max:125'],
             'description' => ['required'],
             'tat' =>['numeric'],
@@ -40,7 +40,7 @@ class AssignmentsController extends Controller
             $spec = $time . '-' . $requestedDocument->getClientOriginalName();
 
             $spec = $requestedDocument->storeAs('uploads', $spec, 'public');
- 
+
             $tags = explode(',', $data['tag']); // Separates tags
 
             $assignments = Assignment::create([
@@ -58,7 +58,7 @@ class AssignmentsController extends Controller
 
         $assignments->tag($tags);
         }
-        elseif (!$data->hasFile('specs')) 
+        elseif (!$data->hasFile('specs'))
         {
             $tags = explode(',', $data['tag']);
 
@@ -74,22 +74,17 @@ class AssignmentsController extends Controller
             ]);
 
             $assignments->tag($tags);
-
         }
-
-
 
         return redirect('/client/home');
     }
 
-
     public function show($id)
     {
-
-        $assignment = Assignment::where('id', $id)->with('tagged')->first();
+        $assignment = Assignment::where('id', $id)->with('tagged')->firstOrFail();
 
         $proposals = Proposal::where('assignment_id', $id)->get();
 
-        return view('assignment', compact('assignment', 'proposals'));
+        return view('new-assignment', compact('assignment', 'proposals'));
     }
 }
