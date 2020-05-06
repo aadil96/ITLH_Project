@@ -3,8 +3,8 @@
 @section('content')
 
 <style type="text/css">
-	
-	.profile{
+
+	.profileImg{
 		border-radius: 50%;
 		/*border: 2px solid;*/
 		width: 150px;
@@ -15,41 +15,41 @@
 
 	<div class="">
 		<div class="row justify-content-center">
-			<div class="col-md-8">
+			<div class="col-lg-8 col-sm-8">
 				<div class="card">
 					<div class="card-header"><h2>Profile</h2></div>
-					
+
 					<div class="card-body">
 						<div class="row">
-							<div class="col-md-3 p-0 pl-3">
-								<img src="/images/img_avatar.png" class="profile">
+							<div class="col-lg-3 col-sm-3 p-0 pl-3">
+								<img src="/images/img_avatar.png" class="profileImg">
 							</div>
 
-							<div class="col-md-8 p-0">
-								<div class="row">
-									<div class="col-12">
+							<div class="col-lg-8 col-sm-8 p-0">
+								<!-- <div class="row"> -->
+									<div class="ml-4">
 										<h2 class="company mt-5">{{$user->name}}</h2>
 									</div>
 
-									<div class="col-12">
-										<h5>Mail: {{$user->email}}</h5>
+									<div class="ml-4">
+										<h5><span class="fa fa-envelope-o"></span> {{$user->email}}</h5>
 									</div>
-								</div>
+								<!-- </div> -->
 							</div>
 						</div>
 
 						<div class="row">
-							<div class="col-4 mt-4">
-								<h5>Worked on: </h5>
+							<div class="col-lg-4 col-sm-4 mt-4">
+								<h5>Completed work: {{$completed->count()}}</h5>
 							</div>
 
-							<div class="col-4 mt-4">
-								<h5>Currently working on: 0</h5>
+							<div class="col-lg-4 col-sm-4 mt-4">
+								<h5>Currently working on: {{$approved->count()}}</h5>
 							</div>
 						</div>
 
 						<div class="row mt-3">
-							<div class="col-md-10">
+							<div class="col-lg-10 col-sm-10">
 								<h5>Overwierw:</h5>
 
 								<p class="mt-3">lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod

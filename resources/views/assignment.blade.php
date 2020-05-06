@@ -1,5 +1,18 @@
 @extends('layouts.app')
 
+@section('navbar-links')
+
+    <ul class="navbar-nav ml-auto">
+        <li class="nav-item ml-auto">
+            <a class="navbar-text nav-link" href="{{route('client.profile', ['id', Auth::user()->id])}}">Profile</a>
+        </li>
+        <li class="nav-item ml-auto">
+            <a class="navbar-text nav-link" href="{{route('client.logout')}}">Logout</a>
+        </li>
+    </ul>
+
+@endsection
+
 @section('content')
 
 <style type="text/css">

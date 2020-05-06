@@ -4,113 +4,56 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- CSRF token -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title','Freelance Marketplace')</title>
 
-    <!-- Scripts -->
-    <!-- <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
-    @yield('script')
-    <script src="{{ asset('js/app.js') }}" defer></script> -->
+        <!-- Fonts and CSS -->
 
-    <!-- Fonts and CSS -->
-
-    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
-          integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://use.fontawesome.com/59150fa147.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
-
     <link rel="stylesheet" type="text/css" href="{{ asset('css/app.css') }}">
 
+    <style type="text/css">
+        nav
+        {
+            font-weight: 900;
+        }
+
+        .navbar-brand {
+            opacity: 70%;
+        }
+
+        body{
+            background-color: #34495E;
+        }
+
+        #brand{
+            color: white;
+        }
+    </style>
 
 </head>
 <body>
 
-<style type="text/css">
-
-    nav
-    {
-        font-weight: 900;
-    }
-
-    .login, .signup
-    {
-        font-size: 17px;
-        color: #626569;
-    }
-
-    .profile, .logout
-    {
-        font-size: 17px;
-        color: #626569;
-    }
-
-    .signup
-    {
-        margin-left: 30px;
-        margin-right: 15px;
-    }
-
-</style>
-
 <!-- NAVBAR -->
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light shadow">
-    <a class="navbar-brand" href="/"><strong>MarketPlace</strong></a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light shadow">
+        <a class="navbar-brand" href="/"><strong>MarketPlace</strong></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            @yield('navbar-links')
+        </div>
+    </nav>
 
-                @auth('client')
-                    <li class="nav-item">
-                        <a class="nav-link" href="/client/home">Home</a>
-                    </li>
-
-                @endauth
-
-                @auth('web')
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="/home">Home</a>
-                    </li>
-
-                @endauth
-        </ul>
-
-        @if (! auth()->user('web') || ! auth()->user('client'))
-            <a class="login" href="{{ route('login') }}">Login</a>
-            <a class="signup" href="{{ route('register') }}">Sign up</a>
-
-            {{--  <a class="login" href="/login">Login</a>
-             <a class="signup" href="/register">Sign up</a> --}}
-
-        @endif
-
-        @auth('web')
-
-            <a class="profile mr-3" href="/profile/{{Auth::user()->id}}">Profile</a>
-            <a class="logout" href="/logout">Logout</a>
-        @endauth
-
-        @auth('client')
-
-            <a class="profile mr-3" href="/profile/{{Auth::user()->id}}">Profile</a>
-            <a class="logout" href="/client/logout">Logout</a>
-
-        @endauth
+    <div class='mt-5'>
+        @yield('content')
     </div>
-</nav>
-
-
-<div class='mt-5 ml-2'>
-
-    @yield('content')
-
-</div>
 
 </body>
 </html>

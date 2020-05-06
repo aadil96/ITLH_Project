@@ -1,12 +1,17 @@
 @extends('layouts.app')
 
-{{--@section('script')--}}
+@section('navbar-links')
 
-{{--    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>--}}
+    <ul class="navbar-nav ml-auto">
+        <li class="nav-item ml-auto">
+            <a class="navbar-text nav-link" href="{{route('client.profile', ['id', Auth::user()->id])}}">Profile</a>
+        </li>
+        <li class="nav-item ml-auto">
+            <a class="navbar-text nav-link" href="{{route('client.logout')}}">Logout</a>
+        </li>
+    </ul>
 
-{{--    <meta name="csrf-token" content="{{ csrf_token() }}">--}}
-
-{{--@endsection--}}
+@endsection
 
 @section('content')
 
@@ -18,7 +23,7 @@
 
                     <div class="card-body">
 
-                        <form action='/assignment/post' enctype="multipart/form-data" method="post">
+                        <form action="/assignment/post/{{Auth::user()->id}}" enctype="multipart/form-data" method="post">
 
                             @csrf
 

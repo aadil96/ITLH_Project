@@ -1,20 +1,29 @@
 @extends('layouts.app')
 
+@section('navbar-links')
+
+    <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+            <a
+                class="navbar-text nav-link"
+                href="{{route('login')}}">
+                Looking for a job ?
+            </a>
+        </li>
+    </ul>
+
+@endsection
+
 @section('content')
-
-    <style type="text/css">
-
-
-    </style>
 
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
-                    <div class="card-header">{{ __('Login') }}</div>
+                    <div class="card-header">{{ __('Client Login') }}</div>
 
                     <div class="card-body">
-                        <form method="POST" action='{{ url("$url") }}'>
+                        <form method="POST" action="{{route('client.login')}}">
                             @csrf
 
                             <div class="form-group row">
@@ -78,6 +87,11 @@
                                 </div>
                             </div>
                         </form>
+
+                        <div class="d-block mt-3" style="text-align:right;">
+                            <p class="">Sign Up  <a href="{{route('client.register')}}">here</a></p>
+                        </div>
+
                     </div>
                 </div>
             </div>

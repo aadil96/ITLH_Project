@@ -1,5 +1,6 @@
 <?php
 
+use \App\Client;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -10,45 +11,33 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('client/profile/{id}', function ($id){
-
-	$client = \App\Client::where('id', $id)->first();
-	$assignment = \App\Assignment::where('id', $id)->first();
-
-	return view('client-profile', compact('client', 'assignment'));
-});
-
-Route::get('profile/{id}', function ($id){
-
-	$user = \App\User::where('id', $id)->first();
-	$assignment = \App\Assignment::where('id', $id)->first();
-
-	return view('freelancer-profile', compact('user', 'assignment'));
-});
-
-Route::get('/', function () {
-    return view('index');
-});
+//
 
 Auth::routes();
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/', 'HomeController@index')->name('home');
+Route::get('profile/{id}', 'HomeController@profile')->name('profile');
 Route::get('/logout', 'HomeController@logout');
 
 Route::prefix('client')->group(function () {
 	Route::get('register', 'Auth\RegisterController@showClientRegistrationForm')->name('client.register');
 	Route::post('register', 'Auth\RegisterController@addClient');
-	Route::get('login', 'ClientsLoginController@showClientLoginForm')->name('client.login');
+	Route::get('login', 'ClientsLoginController@showLoginForm')->name('client.login');
 	Route::post('login', 'ClientsLoginController@clientLogin');
 	Route::get('home', 'ClientController@index')->name('client.home');
-	Route::get('logout', 'ClientController@logout');
+	Route::get('profile/{id}', 'ClientController@profile')->name('client.profile');
+	Route::get('profile/{id}/edit', 'ClientController@editProfilePage');
+	Route::post('profile/{id}/edit', 'ClientController@edit');
+	Route::get('logout', 'ClientController@logout')->name('client.logout');
 });
+
+// Route::get('client/assignment/post/{client}', 'AssignmentsController@showPostAssignmentPage')->name('assignment.post');
+// Route::post('client/assignment/post/{client}', 'AssignmentsController@addAssignment');
 
 Route::prefix('assignment')->group(function ()
 {
-	Route::get('post', 'AssignmentsController@showPostAssignmentPage')->name('assignment.post');
-	Route::post('post', 'AssignmentsController@addAssignment');
-	Route::get('{id}', 'AssignmentsController@show')->name('assignment')->middleware('auth:web,client');
+	Route::get('post/{client}', 'AssignmentsController@showPostAssignmentPage')->name('assignment.post');
+	Route::post('post/{client}', 'AssignmentsController@addAssignment');
+	Route::get('{id}', 'AssignmentsController@show')->name('assignment')/*->middleware('auth:web,client')*/;
 });
 
 Route::prefix('assignment/{assignmentId}/proposal')->group(function(){
@@ -58,21 +47,4 @@ Route::prefix('assignment/{assignmentId}/proposal')->group(function(){
 	Route::post('{proposalId}/reject', 'ProposalsController@reject')->middleware('auth:client');
 });
 
-
-
-
-
-
-
-// Route::get('/search', 'ClientController@index');
-
 Route::get('/proposal/{proposalId}', 'ProposalsController@showSelectedProposal')->middleware('auth:client')->name('proposal');
-
-// Route::group(['middleware' => ['auth', 'auth:client']],function () {
-
-
-
-	 // Route::get('/home', 'HomeController@index')->name('home');
-	 // Route::get('/client/home', 'ClientController@index')->name('client.home');
-
-// });

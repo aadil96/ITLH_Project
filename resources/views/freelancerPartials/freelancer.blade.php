@@ -23,57 +23,30 @@
 
     </style>
 
-    <!-- <div class="row">
-        <div class="col-2">
-            <div class="border rounded">
-                <h2 class="container">Tags</h2>
-
-                <div>
-                    <a href="">Company name</a>
-                </div>
-            </div>
-
-        </div> -->
-
         <div class="row justify-content-center">
-
-            <!-- <div class="col-lg-2 col-sm-2 pl-0 pr-0 mr-5">
-                <div class="card">
-                    <div class="card-header">Tags</div>
-
-                    <div class="body">
-                        <ul style="padding: 0px;">
-                                @foreach($tags as $tag)
-                                    <li class="tagList alert-secondary">
-                                        <a href="home?search={{$tag->name}}">{{$tag->name}}</a>
-                                    </li>
-                                @endforeach
-                        </ul>
-                    </div>
-
-                </div>
-            </div> -->
 
             <div class="col-lg-10 col-sm-10">
                 <div class="card">
                     <div class="card-header">Feed</div>
                     <div class="card-body">
+
                         <!-- Seacrh Bar -->
 
                         <form action="/home" method="get" role="search">
                             {{ csrf_field() }}
                             <div class="input-group">
                                 <input type="text" class="form-control mr-2" name="search"
-                                       placeholder="Search job by company name or title"> <span class="input-group-btn">
-                                        <button type="submit" class="btn btn-outline-dark">
-                                            <span class="fa fa-search"></span>
-                                        </button>
-                                    </span>
+                                       placeholder="Search job by company name or title">
+                                <span class="input-group-btn">
+                                    <button type="submit" class="btn btn-outline-dark">
+                                        <span class="fa fa-search"></span>
+                                    </button>
+                                </span>
                             </div>
                         </form>
                         <br>
 
-                        <!-- Dashboard -->
+                        <!-- Assignments -->
 
                     <div class="">
 
@@ -97,6 +70,8 @@
                                 @endforeach
 
                             </table>
+
+                            <!-- Assignment end -->
 
                         @else
                             {{$message ?? '' ?? ''}}

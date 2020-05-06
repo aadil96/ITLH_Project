@@ -1,12 +1,18 @@
 @extends('layouts.app')
 
-{{--@section('script')--}}
+@section('navbar-links')
 
-{{--    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>--}}
+    <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+            <a
+                class="nav-link"
+                href="{{route('client.register')}}">
+                Want to hire ?
+            </a>
+        </li>
+    </ul>
 
-{{--    <meta name="csrf-token" content="{{ csrf_token() }}">--}}
-
-{{--@endsection--}}
+@endsection
 
 @section('content')
 
@@ -16,7 +22,7 @@
     {
         color: red;
     }
-    
+
 </style>
 
     <div class="container">
@@ -219,6 +225,12 @@
                                 </div>
                             </div>
                         </form>
+
+                        <!-- <div class="d-block mt-3" style="text-align:right;">
+                            <p>
+                                Already registered ? Login <a href="{{route('login')}}">here.</a>
+                            </p>
+                        </div> -->
 
                     </div>
                 </div>

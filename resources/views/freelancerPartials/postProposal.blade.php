@@ -1,32 +1,48 @@
  @extends('layouts.app')
 
+@section('navbar-links')
 
+    <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+            <a class="navbar-text nav-link" href="{{route('profile', ['id' => Auth::user()->id])}}">Profile</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link navbar-text" href="{{route('logout')}}">Logout</a>
+        </li>
+    </ul>
 
-    @section('content')
+@endsection
 
-        <h2>Submit Proposal</h2>
+@section('content')
 
-            {{$user->id}}<br>
-            {{$assignment->client->email}}
+        <div class="row justify-content-center">
+            <div class="col-lg-10 col-sm-10">
+                <div class="card">
+                    <div class="card-header">
+                        Cover Letter
+                    </div>
+                    <div class="card-body">
 
-        <form action="/assignment/{{$assignment->id}}/proposal/post"  method="post" class='form-group'>
-            @csrf
+                        <form action="/assignment/{{$assignment->id}}/proposal/post"  method="post" class='form-group'>
+                            @csrf
 
-            <label for='coverLetter'>Cover Letter</label>
+                            <input name='userId' class="form-control" type="hidden" value="{{$user->id}}">
 
-            <input name='coverLetter' class="form-control" type="text">
+                            <input name='assignmentId' class="form-control" type="hidden" value="{{$assignment->id}}">
 
-            <input name='userId' class="form-control" type="hidden" value="{{$user->id}}">
+                            <input name='clientEmail' class="form-control" type="hidden" value="{{$assignment->client->email}}">
 
-            <input name='assignmentId' class="form-control" type="hidden" value="{{$assignment->id}}">
+                            <input name='coverLetter' class="form-control" type="text">
 
-            <input name='clientEmail' class="form-control" type="hidden" value="{{$assignment->client->email}}">
+                            <input name='status' class="form-control" type="hidden" value="Pending Approval">
+                            <br>
 
-            <input name='status' class="form-control" type="hidden" value="Pending Approval">
+                            <button class='btn btn-primary' type='submit'>Send</button>
 
-            <br>
-            <button class='btn btn-primary' type='submit'>Submit</button>
-        </form>
-
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
 
     @endsection

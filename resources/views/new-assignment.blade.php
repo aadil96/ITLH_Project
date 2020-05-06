@@ -1,15 +1,45 @@
 @extends('layouts.app')
 
+@section('navbar-links')
+
+    @guest
+
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="navbar-text nav-link" href="{{route('login')}}">Login</a>
+            </li>
+            <li>
+                <a class="navbar-text nav-link" href="{{route('register')}}">Sign up</a>
+            </li>
+        </ul>
+
+    @endguest
+
+    @auth('web')
+
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="navbar-text nav-link" href="{{route('profile', ['id', Auth::user()->id])}}">Profile</a>
+            </li>
+            <li class="nav-item">
+                <a class="navbar-text nav-link" href="{{route('logout')}}">Logout</a>
+            </li>
+        </ul>
+
+    @endauth
+
+@endsection
+
 @section('content')
 
 <style media="screen">
-    #apply,#view
+    /* #apply,#view
     {
         text-align: right;
         padding: 10px;
         border-radius: 13px;
         font-size: 1rem;
-    }
+    } */
 
     .tagList
     {
@@ -34,7 +64,7 @@
                             src="/storage/{{$assignment->specification_document_url}}"
                             height="300"
                             width="300"
-                            alt="! No specification document uploaded">
+                            alt="! No specification document uploaded.">
                     </div>
 
                     <div class="container mt-5">
@@ -78,28 +108,31 @@
                     </div>
 
                     <div class="container mt-3 mb-5">
-                        @auth('web')
+                         @guest('web')
                              <a
                                href="{{route('proposal.post', ['assignmentId' => $assignment->id])}}"
-                               id="apply" class="btn btn-dark">
+                               class="btn btn-dark">
                                Apply for this job
-                           </a>
-                        @endauth
+                             </a>
+                         @endguest
 
-                        @auth('client')
-                            <a
-                               href="/assignment/{{$assignment->id}}/proposals"
-                               class="btn btn-light border-dark" id="view">
-                               View Proposals
-                           </a>
-                        @endauth
+                         @auth('web')
+                          @if(session('message'))
+                            <p style="color:red;">{{session('message')}}</p>
+                         @endif
+                             <a
+                               href="{{route('proposal.post', ['assignmentId' => $assignment->id])}}"
+                               class="btn btn-dark">
+                               Apply for this job
+                             </a>
+                         @endauth
+
+
                     </div>
 
                 </div>
             </div>
         </div>
-
-        @auth('client')
 
             <div class="col-lg-3 col-sm-3">
                 <div class="card">
@@ -119,11 +152,13 @@
                                         <tr>
                                             <td>
                                                 {{ substr($proposal->cover_letter, 0, 100) }}
-                                                <a
-                                                    class="d-block text-right"
-                                                    href="/proposal/{{ $proposal->id }}">
-                                                    view more
-                                                </a>
+                                                @auth('client')
+                                                    <a
+                                                        class="d-block text-right"
+                                                        href="/proposal/{{ $proposal->id }}">
+                                                        view more
+                                                    </a>
+                                                @endauth
                                             </td>
                                         </tr>
                                     </tbody>
@@ -131,14 +166,12 @@
                             </table>
 
                         @else
-                            {{$message ?? '' ?? ''}}
+                            {{$message}}
                         @endif
 
                     </div>
                 </div>
             </div>
-
-        @endauth
 
     </div>
 

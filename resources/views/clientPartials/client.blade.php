@@ -1,5 +1,22 @@
 @extends('layouts.app')
 
+@section('navbar-links')
+    <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+            <a
+                class="navbar-text nav-link"
+                href="{{route('client.profile', ['id' => $user->id])}}">
+                Profile
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link navbar-text" href="{{route('client.logout')}}">Logout</a>
+        </li>
+    </ul>
+
+@endsection
+
 @section('content')
 
     <style type="text/css">
@@ -24,53 +41,31 @@
 
     <div class="row justify-content-center">
 
-                                        <!-- Row 1/2 consist of all tags -->
-
-        <div class="col-lg-2 col-sm-2 pl-0 pr-0 mr-5">
-            <div class="card">
-                <div class="card-header">Tags</div>
-
-                <div class="body">
-                    <ul style="padding: 0px;">
-                        <!-- <li> -->
-                            @foreach($tags as $tag)
-                                <li class="tagList alert-secondary">
-                                    <a href="home?search={{$tag->name}}">{{$tag->name}}</a>
-                                </li>
-                            @endforeach
-                        <!-- </li> -->
-                    </ul>
-                </div>
-
-            </div>
-        </div>
-
-        <div class="col-lg-8 col-sm-2">
+        <div class="col-lg-10 col-sm-10">
 
             <div class="card">
                 <div class="card-header">Feed</div>
                 <div class="card-body">
 
-                    <!-- Row 2/2 consist of  search column, assignment -->
-
-                                                <!-- Search bar -->
+                    <!-- Search Bar -->
 
                     <form action="/client/home" method="get" role="search">
                         {{ csrf_field() }}
                         <div class="input-group">
                             <input type="text" class="form-control mr-2" name="search"
-                                   placeholder="Search users"> <span class="input-group-btn">
-                                    <button type="submit" class="btn btn-outline-dark">
+                                   placeholder="Search">
+                            <span class="input-group-btn">
+                                <button type="submit" class="btn btn-outline-dark">
                                         <span class="fa fa-search"></span>
-                                    </button>
-                                </span>
+                                </button>
+                            </span>
                         </div>
                     </form>
                     <br>
 
                     <!-- Search end -->
 
-                    <a id="post" class="btn btn-dark ml-3 mt-3 mb-5" href="{{route('assignment.post')}}">Post Assignment</a>
+                    <a id="post" class="btn btn-dark ml-3 mt-3 mb-5" href="{{route('assignment.post', ['client' => Auth::user()->id])}}">Post Assignment</a>
                     <br>
 
                                                         <!-- Assignments -->
@@ -107,11 +102,6 @@
             </div>
         </div>
 
-
-
-        <div class="col-lg-2 col-sm-2">
-
-        </div>
     </div>
 
 @endsection

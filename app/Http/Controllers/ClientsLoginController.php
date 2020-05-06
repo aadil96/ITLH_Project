@@ -11,33 +11,26 @@ class ClientsLoginController extends Controller
 {
 
     use AuthenticatesUsers;
-    // protected $guard = 'client';
+
 	public function __construct()
 	{
 		$this->middleware('guest:client')->except('logout');
 	}
 
-
-	public function showClientLoginForm()
+	public function showLoginForm()
     {
-    	// ddd(Auth::guard());
-        return view('auth.clientLogin', ['url' => 'client/login']);
+        return view('auth.clientLogin', ['login' => 'client/login']);
     }
 
     public function clientLogin(Request $request)
     {
         $credentials = $request->only('email', 'password');
-// 
-        // ddd($credentials);
 
         if(Auth::guard('client')->attempt($credentials))
         {
-            // dd(Auth::guard('client')->check());
-        	// dd('Reached Here');
         	return redirect()->intended(route('client.home'));
         }
 
-        // return dd('Not there yet', $credentials);
         throw ValidationException::withMessages([
             $this->username() => [trans('auth.failed')],
         ]);

@@ -49,8 +49,4 @@ class User extends Authenticatable
         $this->hasMany('App\Tag');
     }
 
-    // public function proposal()
-    // {
-    //     return $this->hasMany('App\Proposal');
-    // }
 }

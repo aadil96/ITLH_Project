@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Assignment;
 use Conner\Tagging\Model\Tag;
 use DB;
+use App\Client;
 
 class ClientController extends Controller
 {
@@ -58,12 +59,41 @@ class ClientController extends Controller
 
     }
 
+    public function profile($id)
+    {
+        $client = Client::where('id', $id)->firstOrFail();
+
+        $assignment = Assignment::all();
+
+        $approved = Assignment::where('status', 'In Progress')->get();
+
+        return view('client-profile', compact('client', 'assignment', 'approved'));
+    }
+
+    public function editProfilePage($id)
+    {
+        $client = Client::where('id', $id)->firstOrFail();
+
+        return view('clientPartials.update', compact('client'));
+    }
+
+    public function edit(Request $request)
+    {
+        Client::where('id', $request['id'])->update([
+            'company_name' => $request['company_name'],
+            'email' => $request['email'],
+            'password' => bcrypt($request['password'])
+        ]);
+
+        return redirect(route('client.profile', ['id' => $request['id']]));
+    }
+
     public function logout()
     {
         if (Auth::guard('client'))
         {
             Auth::logout();
-            return redirect('/client/login');
+            return redirect(route('client.login'));
         }
     }
 

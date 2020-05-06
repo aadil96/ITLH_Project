@@ -1,12 +1,17 @@
 @extends('layouts.app')
 
-{{--@section('script')--}}
+@section('navbar-links')
+    <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+            <a
+                class="navbar-text nav-link"
+                href="{{route('register')}}">
+                Looking for a job ?
+            </a>
+        </li>
+    </ul>
 
-{{--    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>--}}
-
-{{--    <meta name="csrf-token" content="{{ csrf_token() }}">--}}
-
-{{--@endsection--}}
+@endsection
 
 @section('content')
     <div class="container">
@@ -16,7 +21,7 @@
                     <div class="card-header">{{ __('Register') }}</div>
                     <div class="card-body">
 
-                        <form action='{{ url("$url/register") }}' enctype="multipart/form-data" method="post">
+                        <form action="{{route('client.register')}}" enctype="multipart/form-data" method="post">
 
                             @csrf
 
@@ -106,6 +111,12 @@
                                 </div>
                             </div>
                         </form>
+
+                        <div class="d-block mt-3" style="text-align:right;">
+                            <p>
+                                Already registered ? Login <a href="{{route('client.login')}}">here.</a>
+                            </p>
+                        </div>
 
                     </div>
                 </div>

@@ -7,7 +7,6 @@ use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
-
 use App\Batch;
 use App\Client;
 
@@ -35,8 +34,6 @@ class RegisterController extends Controller
 
     protected function create(array $data)
     {
-
-        // ddd($data);
         $request = request();
 
         // Store files from uploads to public with specified name
@@ -65,8 +62,10 @@ class RegisterController extends Controller
                 'password' => bcrypt($data['password']),
             ]);
         }
-        elseif (!$request->hasFile('cv') || !$request->hasFile('profileImg')) 
+        elseif (!$request->hasFile('cv') || !$request->hasFile('profileImg'))
         {
+
+            // ddd($request->all());
            return User::create(
                 [
                     'batch_id' => $data['batch'],
@@ -114,6 +113,6 @@ class RegisterController extends Controller
             'password' => bcrypt($data['password']),
         ]);
 
-        return redirect('/client/login');
+        return redirect(route('client.login'));
     }
 }

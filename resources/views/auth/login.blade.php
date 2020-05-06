@@ -1,5 +1,18 @@
 @extends('layouts.app')
 
+@section('navbar-links')
+    <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+            <a
+                class="navbar-text nav-link"
+                href="{{route('register')}}">
+                Sign Up
+            </a>
+        </li>
+    </ul>
+
+@endsection
+
 @section('content')
 
     <style type="text/css">
@@ -14,9 +27,9 @@
                     <div class="card-header">{{ __('Login') }}</div>
 
                     <div class="card-body">
-
+                        
                         @isset($url)
-                            <form method="POST" action='{{ url("$url") }}' aria-label="{{ __('Login') }}">
+                            <form method="POST" action="{{route('login')}}" aria-label="{{ __('Login') }}">
                                 @else
                                     <form method="POST" action="{{ route('login') }}" aria-label="{{ __('Login') }}">
                                         @endisset
@@ -86,6 +99,10 @@
                                             </div>
                                         </div>
                                     </form>
+
+                                    <div class="d-block mt-3" style="text-align:right;">
+                                        <p class="">Corporates can login <a href="{{route('client.login')}}">here</a></p>
+                                    </div>
                     </div>
                 </div>
             </div>
