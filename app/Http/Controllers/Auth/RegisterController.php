@@ -38,8 +38,7 @@ class RegisterController extends Controller
 
         // Store files from uploads to public with specified name
 
-        if ($request->hasFile('cv') || $request->hasFile('profileImg'))
-        {
+        if ($request->hasFile('cv') || $request->hasFile('profileImg')) {
             $requestedProfileImage = $request->file('profileImg');
             $requestedCvImage = $request->file('cv');
             $time = time();
@@ -51,22 +50,21 @@ class RegisterController extends Controller
             $cv = $requestedProfileImage->storeAs('uploads', $cv, 'public');
 
             return User::create(
-            [
-                'batch_id' => $data['batch'],
-                'name' => $data['name'],
-                'email' => $data['email'],
-                'phone' => $data['phone'],
-                'profile_image_url' => $profileImage, // Store file path in database
-                'cv_url' => $cv, // Store file path in database
-                'competencies' => $data['cmpt'],
-                'password' => bcrypt($data['password']),
-            ]);
-        }
-        elseif (!$request->hasFile('cv') || !$request->hasFile('profileImg'))
-        {
+                [
+                    'batch_id' => $data['batch'],
+                    'name' => $data['name'],
+                    'email' => $data['email'],
+                    'phone' => $data['phone'],
+                    'profile_image_url' => $profileImage, // Store file path in database
+                    'cv_url' => $cv, // Store file path in database
+                    'competencies' => $data['cmpt'],
+                    'password' => bcrypt($data['password']),
+                ]
+            );
+        } elseif (!$request->hasFile('cv') || !$request->hasFile('profileImg')) {
 
             // ddd($request->all());
-           return User::create(
+            return User::create(
                 [
                     'batch_id' => $data['batch'],
                     'name' => $data['name'],
@@ -74,7 +72,8 @@ class RegisterController extends Controller
                     'phone' => $data['phone'],
                     'competencies' => $data['cmpt'],
                     'password' => bcrypt($data['password']),
-                ]);
+                ]
+            );
         }
     }
 
@@ -95,8 +94,6 @@ class RegisterController extends Controller
 
     public function addClient(Request $data)
     {
-        $this->validator($data->all())->validate(); // Validate requested credentials
-
         if ($data->hasFile('profileImg')) {
             $requestedProfileImage = $data->file('profileImg');
             $time = time();

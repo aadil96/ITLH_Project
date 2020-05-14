@@ -7,7 +7,7 @@
 
 <body>
 
-	<p>New proposal from {{$user->name}}.</p>
+	<p>Your proposal is approved</p>
 
 </body>
 

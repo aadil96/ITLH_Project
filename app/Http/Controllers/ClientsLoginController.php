@@ -12,12 +12,12 @@ class ClientsLoginController extends Controller
 
     use AuthenticatesUsers;
 
-	public function __construct()
-	{
-		$this->middleware('guest:client')->except('logout');
-	}
+    public function __construct()
+    {
+        $this->middleware('guest:client')->except('logout');
+    }
 
-	public function showLoginForm()
+    public function showLoginForm()
     {
         return view('auth.clientLogin', ['login' => 'client/login']);
     }
@@ -26,9 +26,8 @@ class ClientsLoginController extends Controller
     {
         $credentials = $request->only('email', 'password');
 
-        if(Auth::guard('client')->attempt($credentials))
-        {
-        	return redirect()->intended(route('client.home'));
+        if (Auth::guard('client')->attempt($credentials)) {
+            return redirect()->intended(route('client.home'));
         }
 
         throw ValidationException::withMessages([

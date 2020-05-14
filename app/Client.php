@@ -12,8 +12,6 @@ class Client extends Authenticatable
 
     protected $fillable = ['company_name', 'profile_image', 'email', 'password'];
 
-    // protected $guarded = ['company_name'];
-
     public function assignments()
     {
         return $this->hasMany('App\Assignment');
@@ -24,39 +22,44 @@ class Client extends Authenticatable
         $this->hasMany('App\Tag');
     }
 
-    public function addAssignmentWithFiles($data)
+    public function validateAndCreateAssignment($data)
     {
-
-        if (request()->hasFile('specs'))  // This will blow up if 'entcrpt=multi/data' is not specified in form
-        {
+        if (request()->hasFile('specs')) {
             $requestedDocument = request()->file('specs');
             $time = time();
-
             $spec = $time . '-' . $requestedDocument->getClientOriginalName();
-
             $spec = $requestedDocument->storeAs('uploads', $spec, 'public');
-
-            $tags = explode(',', request('tag')); // Separates tags
-
-            // ddd($spec);
-
-            $assignment = $this->assignments()->create([
-                                'client_id' => $this->id,
-                                'title' => request('title'),
-                                'description' => request('dscrpt'),
-                                'specification_document_url' => $spec,
-                                'turn_around_time' => request('tat'),
-                                'company_name' => request('cmpny'),
-                                'cost_low' => request('costLow'),
-                                'cost_high' => request('costHigh'),
-                                'tags' => request('tag'),
-                                'status' => request('status'),
-                            ]);
-
-            $assignment->tag($tags);
+        } else {
+            $spec = null;
         }
 
-        // return ddd($this->id);
-       
+        request()->validate([
+            'title' => ['required', 'max:125'],
+            'dscrpt' => ['required'],
+            'specs' => ['image:jpg,jpeg,png,svg'],
+            'tat' => ['numeric'],
+            'costLow' => ['numeric'],
+            'costHigh' => ['numeric'],
+            'tag' => ['min:3']
+        ]);
+
+        $tags = explode(',', request('tag')); // Separates tags
+
+        $assignment = $this->assignments()->create(
+            [
+                'client_id' => $this->id,
+                'title' => request('title'),
+                'description' => request('dscrpt'),
+                'specification_document_url' => $spec,
+                'turn_around_time' => request('tat'),
+                'company_name' => request('cmpny'),
+                'cost_low' => request('costLow'),
+                'cost_high' => request('costHigh'),
+                'tags' => request('tag'),
+                'status' => request('status'),
+            ]
+        );
+
+        $assignment->tag($tags);
     }
 }

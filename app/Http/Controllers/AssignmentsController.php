@@ -13,7 +13,6 @@ class AssignmentsController extends Controller
     public function __construct()
     {
         $this->middleware('auth:client')->except('show');
-        // $this->middleware('auth:web');
     }
 
     public function showPostAssignmentPage()
@@ -23,41 +22,7 @@ class AssignmentsController extends Controller
 
     public function addAssignment(Client $client)
     {
-
-        // $data->validate([
-        //     'title' => ['required', 'max:125'],
-        //     'description' => ['required'],
-        //     'tat' =>['numeric'],
-        //     'costLow' => ['numeric'],
-        //     'costHigh' => ['numeric'],
-        //     'tag' => ['min:3']
-        // ]);
-
-        if (request()->hasFile('specs'))  // This will blow up if 'entcrpt=multi/data' is not specified in form
-        {
-            $client->addAssignmentWithFiles(request()->all());
-
-        return redirect(route('client.home'));
-        }
-
-
-        if (!$data->hasFile('specs'))
-        {
-            $tags = explode(',', $data['tag']);
-
-            $assignments = Assignment::create([
-                            'client_id' => Auth::id(),
-                            'title' => $data['title'],
-                            'description' => $data['dscrpt'],
-                            'turn_around_time' => $data['tat'],
-                            'company_name' => $data['cmpny'],
-                            'cost_low' => $data['costLow'],
-                            'cost_high' => $data['costHigh'],
-                            'tags' => $data['tag'],
-            ]);
-
-            $assignments->tag($tags);
-        }
+        $client->validateAndCreateAssignment(request()->all());
 
         return redirect(route('client.home'));
     }

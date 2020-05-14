@@ -7,8 +7,8 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth;
 use App\Assignment;
 use Conner\Tagging\Model\Tag;
-use DB;
 use App\Client;
+use Faker\Provider\ar_JO\Company;
 
 class ClientController extends Controller
 {
@@ -19,82 +19,96 @@ class ClientController extends Controller
 
     public function index(Request $request)
     {
-        if(empty($request->all())) // View all Assignments
+        $client = Client::where(
+            'id',
+            Auth::user()->id
+        )->firstOrFail();
+
+        if (empty($request->all())) // View all Assignments
         {
-            return view('clientPartials.client',
-            [
-                'assignments' => Assignment::where('status', 'Pending Approval')
-                                                        ->orderBy('id', 'desc')
-                                                        ->paginate(5),
-                'user' => Auth::user(),
-                'tags' => Tag::all(),
-            ]);
-        }
-        elseif ($request['search'] == '') // if blank search then view all assignment
+            if ($client->assignments->count() > 0) {
+                return view(
+                    'clientPartials.client',
+                    [
+                        'client' => $client,
+                        'assignments' => Assignment::where('client_id', $client->id)
+                            ->where('status', 'Pending Approval')
+                            ->orderBy('id', 'desc')
+                            ->paginate(5)
+                    ]
+                );
+            } elseif ($client->assignments->count() === 0) {
+
+                $message = 'No jobs posted yet';
+
+                return view('clientPartials.client', compact('client', 'message'));
+            }
+        } elseif ($request['search'] == '') // if blank search then view all assignment
         {
-            return view('clientPartials.client',
-                            [
-                                'assignments' => Assignment::latest()
-                                                        ->paginate(5),
-                                'user' => Auth::user(),
-                                'tags' => Tag::all(),
-                            ]);
-        }
-        else // Return search results
+            return view(
+                'clientPartials.client',
+                [
+                    'client' => $client,
+                    'assignments' => Assignment::where('client_id', $client->id)
+                        ->latest()
+                        ->paginate(5)
+                ]
+            );
+        } else // Return search results
         {
             $search = $request['search'];
 
-            return view('clientPartials.client',
-            [
-                'assignments' => Assignment::where('title', 'LIKE', '%' . $search . '%')
-                                                ->orWhere('company_name', 'LIKE', '%' . $search . '%')
-                                                ->orWhere('tags', 'LIKE', '%'. $search . '%')
-                                                ->orderBy('id', 'desc')
-                                                ->paginate(5),
-                'user' => Auth::user(),
-                'message' => 'No assignments found with title "' .$search. '"',
-                'tags' => Tag::all(),
-            ]);
+            return view(
+                'clientPartials.client',
+                [
+                    'client' => $client,
+                    'assignments' => Assignment::where('client_id', $client->id)
+                        ->where('title', 'LIKE', '%' . $search . '%')
+                        ->orWhere('company_name', 'LIKE', '%' . $search . '%')
+                        ->orWhere('tags', 'LIKE', '%' . $search . '%')
+                        ->orderBy('id', 'desc')
+                        ->paginate(5),
+                    'message' => 'No jobs found with term "' . $search . '"',
+                ]
+            );
         }
-
     }
 
-    public function profile($id)
+    public function profile(Client $client)
     {
-        $client = Client::where('id', $id)->firstOrFail();
+        $assignment = Assignment::where('client_id', $client->id)->get();
 
-        $assignment = Assignment::all();
+        $approved = Assignment::where('status', 'In Progress')
+            ->where('client_id', $client->id)
+            ->get();
 
-        $approved = Assignment::where('status', 'In Progress')->get();
-
-        return view('client-profile', compact('client', 'assignment', 'approved'));
+        return view(
+            'clientPartials.client-profile',
+            compact('client', 'assignment', 'approved')
+        );
     }
 
-    public function editProfilePage($id)
+    public function editProfilePage(Client $client)
     {
-        $client = Client::where('id', $id)->firstOrFail();
-
         return view('clientPartials.update', compact('client'));
     }
 
-    public function edit(Request $request)
+    public function edit(Client $client)
     {
-        Client::where('id', $request['id'])->update([
-            'company_name' => $request['company_name'],
-            'email' => $request['email'],
-            'password' => bcrypt($request['password'])
+        $client->where('id', $client->id)->update([
+            'company_name' => request('company_name'),
+            'email' => request('email'),
+            'password' => bcrypt(request('password'))
         ]);
 
-        return redirect(route('client.profile', ['id' => $request['id']]));
+        return redirect()->route('client.profile', ['client' => $client->id]);
     }
 
     public function logout()
     {
-        if (Auth::guard('client'))
-        {
+        if (Auth::guard('client')) {
             Auth::logout();
             return redirect(route('client.login'));
         }
     }
-
 }

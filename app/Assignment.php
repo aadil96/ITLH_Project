@@ -8,9 +8,9 @@ class Assignment extends Model
 {
     use \Conner\Tagging\Taggable;
 
-    protected $fillable = ['client_id', 'title', 'description', 'specification_document_url', 'turn_around_time', 'cost_low', 'cost_high', 'tags'];
+    protected $fillable = ['client_id', 'title', 'description', 'turn_around_time', 'cost_low', 'cost_high', 'tags'];
 
-    protected $guarded = ['status', 'company_name'];
+    protected $guarded = ['status', 'specification_document_url', 'company_name'];
     
     public function client()
     {
