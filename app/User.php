@@ -5,6 +5,8 @@ namespace App;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Validator;
+
 // use User;
 use Batch;
 
@@ -18,7 +20,15 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'batch_id', 'name', 'email', 'phone', 'profile_image_url', 'cv_url', 'competencies', 'user_type', 'password',
+        'batch_id',
+        'name',
+        'email',
+        'phone',
+        'profile_image_url',
+        'cv_url',
+        'competencies',
+        'user_type',
+        'password',
     ];
 
     /**
@@ -26,9 +36,7 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $hidden = [
-        'password', 'remember_token',
-    ];
+    protected $hidden = ['password', 'remember_token'];
 
     /**
      * The attributes that should be cast to native types.
@@ -52,5 +60,14 @@ class User extends Authenticatable
     public function proposals()
     {
         return $this->hasMany('App\Proposal');
+    }
+
+    public function saveImageWithNameInPublicPath($request)
+    {
+        $image = time() . '-' . $request->getClientOriginalName();
+
+        $image = $request->storeAs('uploads', $image, 'public');
+
+        return $image;
     }
 }

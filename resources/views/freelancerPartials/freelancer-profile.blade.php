@@ -48,19 +48,29 @@
 				<div class="card-body">
 					<div class="row">
 						<div class="col-lg-3 col-sm-3 p-0 pl-3">
-							<img src="/images/img_avatar.png" class="profileImg">
+							<img src="/storage/{{ $user->profile_image_url }}" alt="profile
+							image"
+                                 class="profileImg">
 						</div>
 
 						<div class="col-lg-8 col-sm-8 p-0">
-							<!-- <div class="row"> -->
 							<div class="ml-4">
 								<h2 class="company mt-5">{{$user->name}}</h2>
 							</div>
 
-							<div class="ml-4">
-								<h5><span class="fa fa-envelope-o"></span> {{$user->email}}</h5>
+							<div class="row">
+								<div class="ml-4 col-lg-4 col-sm-4">
+									<h5><span class="fa fa-envelope-o"></span> {{$user->email}}</h5>
+								</div>
+
+								@if($user->phone !== null)
+
+								<div class="ml-4 col-lg-4 col-sm-4">
+									<h5><span class="fa fa-envelope-o"></span> {{$user->phone}}</h5>
+								</div>
+
+								@endif
 							</div>
-							<!-- </div> -->
 						</div>
 					</div>
 
@@ -91,8 +101,14 @@
 						</div>
 					</div>
 
-					<div class="">
-						<a href="">Edit Profile</a>
+					<div class="row mt-3">
+						<div class="col-lg-10 col-sm-10">
+							<h5>Competencies: {{$user->competencies}}</h5>
+						</div>
+					</div>
+
+					<div class="mt-3">
+						<a href="{{ route('freelancer.edit', ['user' => $user->id]) }}">Edit Profile</a>
 					</div>
 
 				</div>

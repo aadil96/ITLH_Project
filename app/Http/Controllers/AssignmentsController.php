@@ -12,7 +12,7 @@ class AssignmentsController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:client')->except('show');
+        $this->middleware('auth:client,admin')->except('show');
     }
 
     public function showPostAssignmentPage()

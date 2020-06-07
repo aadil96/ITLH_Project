@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
-    /*
+	/*
     |--------------------------------------------------------------------------
     | Login Controller
     |--------------------------------------------------------------------------
@@ -20,54 +20,28 @@ class LoginController extends Controller
     |
     */
 
-    use AuthenticatesUsers;
+	use AuthenticatesUsers;
 
-    /**
-     * Where to redirect users after login.
-     *
-     * @var string
-     */
+	/**
+	 * Where to redirect users after login.
+	 *
+	 * @var string
+	 */
 
-    protected $redirectTo = '/home';
+	protected $redirectTo = '/home';
 
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('guest')->except('logout');
-        // $this->middleware('guest:client')->except('logout');
-    }
+	/**
+	 * Create a new controller instance.
+	 *
+	 * @return void
+	 */
+	public function __construct()
+	{
+		$this->middleware('guest')->except('logout');
+	}
 
-    public function showLoginForm()
-    {
-        return view('auth.login');
-    }
-
-    // Client Login
-
-    // public function showClientLoginForm()
-    // {
-    //     return view('auth.login', ['login' => 'login']);
-    // }
-
-    // public function clientLogin(Request $request)
-    // {
-    //     // Auth::guest();
-
-    //     // dd(Auth::guard());
-    //     $this->validate($request, [
-    //         'email' => 'required|email',
-    //         'password' => 'required|min:6'
-    //     ]);
-
-    //     if (Auth::guard('client')
-    //         ->attempt(['email' => $request->email, 'password' => $request->password], $request
-    //             ->get('remember'))) {
-
-    //         return redirect()->intended(route('client.home'));
-    //     }
-    // }
+	public function showLoginForm()
+	{
+		return view('auth.login');
+	}
 }

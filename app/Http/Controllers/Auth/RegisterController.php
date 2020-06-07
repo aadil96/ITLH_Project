@@ -10,7 +10,6 @@ use Illuminate\Http\Request;
 use App\Batch;
 use App\Client;
 
-
 class RegisterController extends Controller
 {
     use RegistersUsers;
@@ -27,60 +26,47 @@ class RegisterController extends Controller
     {
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'email' => [
+                'required',
+                'string',
+                'email',
+                'max:255',
+                'unique:users',
+            ],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
     }
 
     protected function create(array $data)
     {
-        $request = request();
+        $user = new User();
 
-        // Store files from uploads to public with specified name
+        if (request()->hasFile('cv') || request()->hasFile('profileImg')) {
 
-        if ($request->hasFile('cv') || $request->hasFile('profileImg')) {
-            $requestedProfileImage = $request->file('profileImg');
-            $requestedCvImage = $request->file('cv');
-            $time = time();
+            $profileImage = $user->saveImageWithNameInPublicPath(request('cv'));
 
-            $profileImage = $time . '-' . $requestedProfileImage->getClientOriginalName();
-            $cv = $time . '-' . $requestedCvImage->getClientOriginalName();
+            $cv = $user->saveImageWithNameInPublicPath(request('profileImg'));
 
-            $profileImage = $requestedProfileImage->storeAs('uploads', $profileImage, 'public');
-            $cv = $requestedProfileImage->storeAs('uploads', $cv, 'public');
-
-            return User::create(
-                [
-                    'batch_id' => $data['batch'],
-                    'name' => $data['name'],
-                    'email' => $data['email'],
-                    'phone' => $data['phone'],
-                    'profile_image_url' => $profileImage, // Store file path in database
-                    'cv_url' => $cv, // Store file path in database
-                    'competencies' => $data['cmpt'],
-                    'password' => bcrypt($data['password']),
-                ]
-            );
-        } elseif (!$request->hasFile('cv') || !$request->hasFile('profileImg')) {
-
-            // ddd($request->all());
-            return User::create(
-                [
-                    'batch_id' => $data['batch'],
-                    'name' => $data['name'],
-                    'email' => $data['email'],
-                    'phone' => $data['phone'],
-                    'competencies' => $data['cmpt'],
-                    'password' => bcrypt($data['password']),
-                ]
-            );
+        } else {
+            $profileImage = null;
+            $cv = null;
         }
+
+        return User::create([
+            'batch_id' => $data['batch'],
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'phone' => $data['phone'],
+            'profile_image_url' => $profileImage, // Store file path in database
+            'cv_url' => $cv, // Store file path in database
+            'competencies' => $data['cmpt'],
+            'password' => bcrypt($data['password']),
+        ]);
     }
 
     public function showRegistrationForm()
     {
-        $batch = new Batch;
-        $batch = $batch->all();
+        $batch = Batch::get();
 
         return view('auth.register', compact('batch'));
     }
@@ -94,13 +80,11 @@ class RegisterController extends Controller
 
     public function addClient(Request $data)
     {
+        $client = new Client();
         if ($data->hasFile('profileImg')) {
-            $requestedProfileImage = $data->file('profileImg');
-            $time = time();
-
-            $profileImage = $time . '-' . $requestedProfileImage->getClientOriginalName();
-
-            $profileImage = $requestedProfileImage->storeAs('uploads', $profileImage, 'public');
+            $profileImage = $client->saveImageWithNameInPublicPath($data['profileImg']);
+        } else {
+            $profileImage = null;
         }
 
         Client::create([

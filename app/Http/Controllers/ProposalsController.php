@@ -12,9 +12,6 @@ use App\Assignment;
 use App\Mail\NewProposal;
 use Illuminate\Support\Facades\DB;
 
-
-
-
 class ProposalsController extends Controller
 {
     public function __construct()
@@ -24,84 +21,110 @@ class ProposalsController extends Controller
 
     public function showPostProposalPage(Assignment $assignment)
     {
-
         $user = Auth::user();
-        return view('freelancerPartials.postProposal', compact('user', 'assignment'));
+        return view(
+            'freelancerPartials.postProposal',
+            compact('user', 'assignment')
+        );
     }
 
     public function create(Request $data)
-    {
+    { //prompt if assignment already awarded or already applied.
 
-        //prompt if assignment already awarded or already applied.
-
-        $proposal = Proposal::where('assignment_id', $data['assignmentId'])
+        $alreadyApplied = Proposal::where(
+            'assignment_id',
+            $data['assignmentId']
+        )
             ->where('user_id', $data['userId'])
             ->first();
 
-        if ($proposal) {
-            session()
-                ->flash('message', 'You can only apply once.');
-            return redirect()
-                ->route('assignment', ['id' => $data['assignmentId']]);
-        } elseif (
-            Proposal::where('assignment_id', $data['assignmentId'])
-            ->first()
-        ) {
-            session()
-                ->flash('message', 'Project not available or awarded to someone else.');
-            return redirect()
-                ->route('assignment', ['id' => $data['assignmentId']]);
-        } else {
+        $awardedToSomeone = Proposal::where('assignment_id', $data['assignmentId'])
+            ->where('status', 'Approved')
+            ->first();
 
+        if ($alreadyApplied) {
+            session()->flash('message', 'You can only apply once.');
+            return redirect()->route('assignment', [
+                'id' => $data['assignmentId'],
+            ]);
+        } elseif ($awardedToSomeone) {
+            session()->flash(
+                'message',
+                'Project not available or awarded to someone else.'
+            );
+            return redirect()->route('assignment', [
+                'id' => $data['assignmentId'],
+            ]);
+        } else {
             Proposal::create([
                 'user_id' => $data['userId'],
                 'assignment_id' => $data['assignmentId'],
                 'cover_letter' => $data['coverLetter'],
-                'status' => $data['status']
+                'status' => $data['status'],
             ]);
 
             // Send a mail to the client when user submits a proposal
 
             $user = User::where('id', $data['userId'])->first();
-            $assignment = Assignment::where('id', $data['assignmentId'])->first();
+            $assignment = Assignment::where(
+                'id',
+                $data['assignmentId']
+            )->first();
 
-            Mail::to(request('clientEmail'))
-                ->send(new NewProposal($user, $assignment));
+            Mail::to(request('clientEmail'))->send(
+                new NewProposal($user, $assignment)
+            );
 
-            return redirect(route('assignment', ['id' => $data['assignmentId']]));
+            return redirect(
+                route('assignment', ['id' => $data['assignmentId']])
+            );
         }
     }
 
     public function showSelectedProposal(User $user, Proposal $proposal)
     {
-        return view('clientPartials.selected-proposal', compact('proposal', 'user'));
+        return view(
+            'clientPartials.selected-proposal',
+            compact('proposal', 'user')
+        );
     }
 
     //  Approve or Reject Proposal
 
     public function approve(Assignment $assignment, Proposal $proposal)
     {
-        $proposal->where('id', $proposal->id)
-            ->update(['status' => 'Approved']);
+        $proposal->update(['status' => 'Approved']);
 
         //    Change Assignment status after approving a proposal
 
-        $assignment->where('id', $assignment->id)
-            ->update(['status' => 'In Progress']);
+        $assignment->update(['status' => 'In Progress']);
 
-        Mail::to($proposal->user->email)
-            ->send(new \App\Mail\Approved);
+        Proposal::where('status', 'Pending Approval')->update([
+            'status' => 'Rejected',
+        ]);
 
-        return redirect()
-            ->route('client.home');
+        $usersRejected = Proposal::where('status', 'Rejected')->get();
+
+        foreach ($usersRejected as $rejected) {
+            Mail::to($rejected->user->email)->send(new \App\Mail\Rejected());
+        }
+
+        Mail::to($proposal->user->email)->send(new \App\Mail\Approved());
+
+        return redirect()->route('client.home');
     }
 
-    public function reject($id)
+    public function reject(Assignment $assignment, Proposal $proposal)
     {
-        $proposal = Proposal::where('id', $id)
-            ->update(['status' => 'Rejected']);
+        $proposal->update([
+            'status' => 'Rejected',
+        ]);
 
-        return redirect()
-            ->route('proposal', ['proposalId' => $id]);
+        Mail::to($proposal->user->email)->send(new \App\Mail\Rejected());
+
+        return redirect()->route('proposal', [
+            'user' => $proposal->user->id,
+            'proposal' => $proposal->id,
+        ]);
     }
 }

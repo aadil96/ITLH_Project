@@ -7,7 +7,7 @@
 
 <body>
 
-	<p>Your proposal is approved.</p>
+	<p>Your proposal is rejected.</p>
 
 </body>
 

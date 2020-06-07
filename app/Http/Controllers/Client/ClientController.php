@@ -3,18 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth;
 use App\Assignment;
-use Conner\Tagging\Model\Tag;
 use App\Client;
-use Faker\Provider\ar_JO\Company;
 
 class ClientController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:client');
+        $this->middleware('auth:client,admin');
     }
 
     public function index(Request $request)
@@ -26,23 +23,20 @@ class ClientController extends Controller
 
         if (empty($request->all())) // View all Assignments
         {
-            if ($client->assignments->count() > 0) {
-                return view(
-                    'clientPartials.client',
-                    [
-                        'client' => $client,
-                        'assignments' => Assignment::where('client_id', $client->id)
-                            ->where('status', 'Pending Approval')
-                            ->orderBy('id', 'desc')
-                            ->paginate(5)
-                    ]
-                );
-            } elseif ($client->assignments->count() === 0) {
+            $assignments = Assignment::where('client_id', $client->id)
+                ->where('status', 'Pending Approval')
+                ->orderBy('id', 'desc')
+                ->paginate(5);
 
-                $message = 'No jobs posted yet';
+            return view(
+                'clientPartials.client',
+                [
+                    'client' => $client,
+                    'assignments' => $assignments,
+                    'message' => 'No jobs posted yet.',
 
-                return view('clientPartials.client', compact('client', 'message'));
-            }
+                ]
+            );
         } elseif ($request['search'] == '') // if blank search then view all assignment
         {
             return view(
@@ -63,10 +57,14 @@ class ClientController extends Controller
                 [
                     'client' => $client,
                     'assignments' => Assignment::where('client_id', $client->id)
-                        ->where('title', 'LIKE', '%' . $search . '%')
-                        ->orWhere('company_name', 'LIKE', '%' . $search . '%')
-                        ->orWhere('tags', 'LIKE', '%' . $search . '%')
-                        ->orderBy('id', 'desc')
+                        ->where('title', 'LIKE', '%' .
+                            $search .
+                            '%')
+                        ->orWhere('client_id', $client->id)
+                        ->where('tags', 'LIKE', '%' .
+                            $search .
+                            '%')
+                        ->latest()
                         ->paginate(5),
                     'message' => 'No jobs found with term "' . $search . '"',
                 ]

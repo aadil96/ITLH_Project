@@ -28,7 +28,7 @@
 
     <div class="col-lg-10 col-sm-10">
 
-        <div class="card">
+        <div class="card mb-5">
             <div class="card-header">Feed</div>
             <div class="card-body">
 
@@ -81,7 +81,7 @@
 
                 <!-- Assignment end -->
 
-                {{$assignments->links()}}
+{{--                {{$assignments->links()}}--}}
 
                 @else
                 <div class="ml-3">
