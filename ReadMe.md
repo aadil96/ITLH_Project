@@ -1,8 +1,8 @@
 # MarketPlace project
 
-### Pre-requesties:
+### Pre-requisite:
 
-PHP > 7.4
+PHP > 7.2
 
 Composer
 
