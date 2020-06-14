@@ -93,11 +93,11 @@ class ProposalsController extends Controller
 
     public function approve(Assignment $assignment, Proposal $proposal)
     {
+        \DB::table('assignments')->where('id', $assignment->id)
+            ->update(['status' => 'In Progress']);
         $proposal->update(['status' => 'Approved']);
 
         //    Change Assignment status after approving a proposal
-
-        $assignment->update(['status' => 'In Progress']);
 
         Proposal::where('status', 'Pending Approval')->update([
             'status' => 'Rejected',

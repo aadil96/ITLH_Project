@@ -6,15 +6,15 @@ Route::prefix('admin')->group(function () {
     Route::get('register', 'Admin/AdminRegisterController@show')->name(
         'admin.register'
     );
-    Route::post('register', 'Admin/AdminRegisterController@create');
-    Route::get('login', 'Admin/AdminLoginController@show')->name('admin.login');
-    Route::post('login', 'Admin/AdminLoginController@login');
-    Route::get('logout', 'Admin/AdminController@logout')->name('admin.logout');
-    Route::get('home', 'Admin/AdminController@show')->name('admin.home');
-    Route::post('addBatch', 'Admin/AdminController@addbatch');
-    Route::get('{assignment}/delete', 'Admin/AdminController@destroyAsssignment')->name('delete.assignment');
-    Route::get('user/{user}/delete', 'Admin/AdminController@destroyUser')->name('delete.user');
-    Route::get('client/{client}/delete', 'Admin/AdminController@destroyClient')->name('delete.client');
+    Route::post('register', 'Admin\AdminRegisterController@create');
+    Route::get('login', 'Admin\AdminLoginController@show')->name('admin.login');
+    Route::post('login', 'Admin\AdminLoginController@login');
+    Route::get('logout', 'Admin\AdminController@logout')->name('admin.logout');
+    Route::get('home', 'Admin\AdminController@show')->name('admin.home');
+    Route::post('addBatch', 'Admin\AdminController@addbatch');
+    Route::get('{assignment}/delete', 'Admin\AdminController@destroyAsssignment')->name('delete.assignment');
+    Route::get('user/{user}/delete', 'Admin\AdminController@destroyUser')->name('delete.user');
+    Route::get('client/{client}/delete', 'Admin\AdminController@destroyClient')->name('delete.client');
 });
 
 /* End */
@@ -49,20 +49,20 @@ Route::prefix('client')->group(function () {
         'Auth\RegisterController@showClientRegistrationForm'
     )->name('client.register');
     Route::post('register', 'Auth\RegisterController@addClient');
-    Route::get('login', 'Client/ClientsLoginController@showLoginForm')->name(
+    Route::get('login', 'Client\ClientsLoginController@showLoginForm')->name(
         'client.login'
     );
-    Route::post('login', 'Client/ClientsLoginController@clientLogin');
-    Route::get('home', 'Client/ClientController@index')->name('client.home');
-    Route::get('logout', 'Client/ClientController@logout')->name('client.logout');
+    Route::post('login', 'Client\ClientsLoginController@clientLogin');
+    Route::get('home', 'Client\ClientController@index')->name('client.home');
+    Route::get('logout', 'Client\ClientController@logout')->name('client.logout');
 });
 
 Route::prefix('client/{client}')->group(function () {
-    Route::get('profile', 'Client/ClientController@profile')->name('client.profile');
-    Route::get('profile/edit', 'Client/ClientController@editProfilePage')->name(
+    Route::get('profile', 'Client\ClientController@profile')->name('client.profile');
+    Route::get('profile/edit', 'Client\ClientController@editProfilePage')->name(
         'client.edit'
     );
-    Route::post('profile/edit', 'Client/ClientController@edit');
+    Route::post('profile/edit', 'Client\ClientController@edit');
 });
 
 /* End */

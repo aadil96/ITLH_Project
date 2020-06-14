@@ -32,6 +32,11 @@
 			<div class="card-body">
 
 				<!-- Seacrh Bar -->
+
+                @if( isset($greet))
+                    {{ $greet }}
+                @endif
+
 				<form class="form-group mt-3" action="/home" method="get">
 					<div class="col-10 d-inline-flex">
 						<input id="searchInput" type="text" class="form-control mr-2" name="search"
@@ -77,7 +82,7 @@
 							<th>Tags</th>
 						</thead>
 
-						@foreach ( $assignments->where('status', 'Pending Approval') as $assignment )
+						@foreach ( $assignments as $assignment )
 						<tr>
 							<td>{{ $assignment->title }}</td>
 							<td>{{ Str::limit($assignment->description, 50, '...') }}</td>

@@ -107,9 +107,11 @@
 						</div>
 					</div>
 
-					<div class="mt-3">
-						<a href="{{ route('freelancer.edit', ['user' => $user->id]) }}">Edit Profile</a>
-					</div>
+					@auth('web')
+                        <div class="mt-3">
+                            <a href="{{ route('freelancer.edit', ['user' => $user->id]) }}">Edit Profile</a>
+                        </div>
+                    @endauth
 
 				</div>
 			</div>

@@ -18,22 +18,19 @@ class HomeController extends Controller
     public function show(Request $request)
     {
         $user = Auth::user();
-        $assignments = Assignment::orderBy('id', 'desc')->paginate(5);
+        $assignments = Assignment::where('status', 'Pending Approval')
+            ->orderBy('id', 'desc')->paginate(5);
 
         if (empty($request->all())) { // View all Assignments
 
             return view('freelancerPartials.freelancer', compact('assignments', 'user'));
 
-        } elseif ($request['search'] == '') { // If search empty
-
+        } elseif (!empty($request) && $request->has('search') && $request['search'] == '') { // If
+            // search
             return view('freelancerPartials.freelancer', compact('assignments', 'user'));
 
-        } elseif ($request['min'] == '' && $request['max'] == '') { // Return price results
-
-            return view('freelancerPartials.freelancer', compact('assignments', 'user'));
-
-        } elseif ($request['search']) { // Return search results
-
+        } elseif (!empty($request) && $request->has('search') && $request['search'] !== '') { //
+            // Return search results
             $search = $request['search'];
 
             return view('freelancerPartials.freelancer', [
@@ -43,7 +40,6 @@ class HomeController extends Controller
                     '%' . $search . '%'
                 )
                     ->orWhere('company_name', 'LIKE', '%' . $search . '%')
-                    ->orWhere('tags', 'LIKE', '%' . $search . '%')
                     ->orderBy('id', 'desc')
                     ->paginate(5),
                 'user' => $user,
@@ -52,7 +48,14 @@ class HomeController extends Controller
                 'showingResultsFor' => 'Showing results for "' . $search . '".',
             ]);
 
-        } elseif ($request['min']) {
+        } elseif (!empty($request) && $request->has('min') && $request['min'] == '' && $request['max'] == '') { // Return price results
+
+            return view('freelancerPartials.freelancer', compact('assignments', 'user'));
+
+        } elseif (!empty($request) && $request->has('min') || $request->has('max') && $request['min']
+            !== ''
+            ||
+            $request['max'] !== '') {
             $min = $request['min'];
             $max = $request['max'];
 

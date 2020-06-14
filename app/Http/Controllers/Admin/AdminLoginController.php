@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -10,6 +11,7 @@ use Illuminate\Validation\ValidationException;
 class AdminLoginController extends Controller
 {
     use AuthenticatesUsers;
+
     public function __construct()
     {
         $this->middleware('guest:admin')->except('logout');
@@ -32,7 +34,8 @@ class AdminLoginController extends Controller
             $this->username() => [trans('auth.failed')],
         ]);
 
-       return redirect()->back()->withInput();
+
+        return redirect()->back()->withInput();
 
     }
 

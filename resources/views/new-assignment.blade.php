@@ -131,8 +131,7 @@
                 <div class="card-body">
 
                     @if($proposals->count() > 0)
-                        {{$proposals->count()}}
-                        <table class="table mt-3">
+                        <table class="table mt-3 mb-2">
                             @foreach($proposals as $proposal)
                                 <thead>
                                 <th id="heading">{{ $proposal->user->name }}</th>
