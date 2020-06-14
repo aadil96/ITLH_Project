@@ -29,7 +29,7 @@ class AdminController extends Controller
     public function addBatch(Request $request)
     {
         $batch = \App\Batch::create([
-            'name' => $request['batch'],
+            'name' => $request['batchYear'],
         ]);
 
         return redirect()->back();

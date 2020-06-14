@@ -21,6 +21,7 @@
                 <form class="form-group" method="POST" action="/admin/addBatch">
                     @csrf
                     <label for="batchYear">Enter new batch</label>
+                    
                     <input id="batchYear" class="form-control" name="batchYear" type="text">
 
                     <button class="btn btn-primary mt-3" type="submit">submit</button>

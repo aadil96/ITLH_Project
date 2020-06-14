@@ -3,7 +3,7 @@
 /* Admin Routes */
 
 Route::prefix('admin')->group(function () {
-    Route::get('register', 'Admin/AdminRegisterController@show')->name(
+    Route::get('register', 'Admin\AdminRegisterController@show')->name(
         'admin.register'
     );
     Route::post('register', 'Admin\AdminRegisterController@create');
