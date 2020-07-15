@@ -8,57 +8,62 @@ use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth:admin');
-    }
+	public function __construct()
+	{
+		$this->middleware('auth:admin')->except('index');
+	}
 
-    public function show()
-    {
-        $admin = Auth::user();
+	public function index()
+	{
+		return view('admin');
+	}
 
-        $users = \App\User::latest()->paginate(5);
+	public function show()
+	{
+		$admin = Auth::user();
 
-        $clients = \App\Client::latest()->paginate(5);
+		$users = \App\User::latest()->paginate(5);
 
-        $assignments = \App\Assignment::latest()->paginate(5);
+		$clients = \App\Client::latest()->paginate(5);
 
-        return view('admin-home', compact('admin', 'users', 'clients', 'assignments'));
-    }
+		$assignments = \App\Assignment::latest()->paginate(5);
 
-    public function addBatch(Request $request)
-    {
-        $batch = \App\Batch::create([
-            'name' => $request['batchYear'],
-        ]);
+		return view('admin-home', compact('admin', 'users', 'clients', 'assignments'));
+	}
 
-        return redirect()->back();
-    }
+	public function addBatch(Request $request)
+	{
+		$batch = \App\Batch::create([
+			'name' => $request['batchYear'],
+		]);
 
-    public function destroyAssignment(\App\Assignment $assignment)
-    {
-        $assignment->delete();
-    }
+		return redirect()->back();
+	}
 
-    public function destroyClient(\App\Client $client)
-    {
-        $client->delete();
+	public function destroyAssignment(\App\Assignment $assignment)
+	{
+		$assignment->delete();
+	}
 
-        return redirect()->back();
-    }
+	public function destroyClient(\App\Client $client)
+	{
+		$client->delete();
 
-    public function destroyUser(\App\User $user)
-    {
-        $user->delete();
+		return redirect()->back();
+	}
 
-        return redirect()->back();
-    }
+	public function destroyUser(\App\User $user)
+	{
+		$user->delete();
 
-    public function logout()
-    {
-        if (Auth::guard('admin')) {
-            Auth::logout();
-            return redirect(route('admin.login'));
-        }
-    }
+		return redirect()->back();
+	}
+
+	public function logout()
+	{
+		if (Auth::guard('admin')) {
+			Auth::logout();
+			return redirect(route('admin.login'));
+		}
+	}
 }

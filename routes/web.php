@@ -2,7 +2,10 @@
 
 /* Admin Routes */
 
+use PHPUnit\Framework\MockObject\Stub\ReturnStub;
+
 Route::prefix('admin')->group(function () {
+	Route::get('/', 'Admin\AdminController@index');
 	Route::get('register', 'Admin\AdminRegisterController@show')->name(
 		'admin.register'
 	);
