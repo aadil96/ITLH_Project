@@ -38,8 +38,7 @@
                     {{ csrf_field() }}
 
                     <div class="col-10 d-inline-flex">
-                        <input id="searchInput" type="text" class="form-control mr-2" name="search"
-                            placeholder="Search job by company name or title">
+                        <input id="searchInput" type="text" class="form-control mr-2" name="search" placeholder="Search job by company name or title" autofocus>
                         <span class="form-group-btn">
                             <button type="submit" class="btn btn-outline-dark">
                                 <span class="fa fa-search"></span>
@@ -51,8 +50,7 @@
 
                 <!-- Search end -->
 
-                <a id="post" class="btn btn-dark ml-3 mb-3"
-                    href="{{route('assignment.post', ['client' => $client->id])}}">Post Assignment</a>
+                <a id="post" class="btn btn-dark ml-3 mb-3" href="{{route('assignment.post', ['client' => $client->id])}}">Post Assignment</a>
                 <br>
 
                 <!-- Assignments -->
@@ -70,8 +68,7 @@
                     <tbody>
 
                         <tr>
-                            <td>{{ substr($assignment->description, 0, 100) }} <a class="d-block text-right"
-                                    href="/assignment/{{ $assignment->id }}">view more</a></td>
+                            <td>{{ substr($assignment->description, 0, 100) }} <a class="d-block text-right" href="/assignment/{{ $assignment->id }}">view more</a></td>
                         </tr>
 
                     </tbody>
@@ -81,7 +78,7 @@
 
                 <!-- Assignment end -->
 
-{{--                {{$assignments->links()}}--}}
+                {{-- {{$assignments->links()}}--}}
 
                 @else
                 <div class="ml-3">

@@ -19,7 +19,7 @@
                 <form action="/assignment/{{$assignment->id}}/proposal/post" method="post" class='form-group'>
                     @csrf
 
-                    <input name='userId' class="form-control" type="hidden" value="{{$user->id}}">
+                    <input name='userId' class="form-control" type="hidden" value="{{$user->id}}" autofocus>
 
                     <input name='assignmentId' class="form-control" type="hidden" value="{{$assignment->id}}">
 

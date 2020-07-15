@@ -24,11 +24,9 @@ class HomeController extends Controller
         if (empty($request->all())) { // View all Assignments
 
             return view('freelancerPartials.freelancer', compact('assignments', 'user'));
-
         } elseif (!empty($request) && $request->has('search') && $request['search'] == '') { // If
             // search
             return view('freelancerPartials.freelancer', compact('assignments', 'user'));
-
         } elseif (!empty($request) && $request->has('search') && $request['search'] !== '') { //
             // Return search results
             $search = $request['search'];
@@ -44,18 +42,18 @@ class HomeController extends Controller
                     ->paginate(5),
                 'user' => $user,
                 'message' =>
-                    'No assignments found with title "' . $search . '".',
+                'No assignments found with title "' . $search . '".',
                 'showingResultsFor' => 'Showing results for "' . $search . '".',
             ]);
-
         } elseif (!empty($request) && $request->has('min') && $request['min'] == '' && $request['max'] == '') { // Return price results
 
             return view('freelancerPartials.freelancer', compact('assignments', 'user'));
-
-        } elseif (!empty($request) && $request->has('min') || $request->has('max') && $request['min']
+        } elseif (
+            !empty($request) && $request->has('min') || $request->has('max') && $request['min']
             !== ''
             ||
-            $request['max'] !== '') {
+            $request['max'] !== ''
+        ) {
             $min = $request['min'];
             $max = $request['max'];
 
@@ -69,7 +67,7 @@ class HomeController extends Controller
                 'user' => $user,
                 'message' => 'No assignments found at this cost range',
                 'showingResultsFor' =>
-                    'Showing results for projects under "' .
+                'Showing results for projects under "' .
                     $min .
                     ' - ' .
                     $max .
@@ -87,6 +85,7 @@ class HomeController extends Controller
         if (empty($request->all())) {
             return view('index', [
                 'assignments' => Assignment::orderBy('id', 'desc')->paginate(5),
+                'message' => 'No Jobs posted yet',
                 'user' => $user,
             ]);
         } // if blank search then view all assignment
@@ -111,7 +110,7 @@ class HomeController extends Controller
                     ->paginate(5),
                 'user' => $user,
                 'message' =>
-                    'No assignments found with title "' . $search . '".',
+                'No assignments found with title "' . $search . '".',
                 'showingResultsFor' => 'Showing results for "' . $search . '".',
             ]);
         }
@@ -147,7 +146,6 @@ class HomeController extends Controller
 
             $profileImage = $user->saveImageWithNameInPublicPath(request('profileImage'));
             $cv = $user->saveImageWithNameInPublicPath(request('cv'));
-
         } else {
             $profileImage = null;
             $cv = null;

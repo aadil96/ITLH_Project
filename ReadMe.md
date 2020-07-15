@@ -1,6 +1,6 @@
-# MarketPlace project
+# 1. MarketPlace project
 
-### Pre-requisite:
+### 1.0.1. Pre-requisite:
 
 PHP > 7.2
 
@@ -8,11 +8,11 @@ Composer
 
 MySQL
 
-### Note:
+### 1.0.2. Note:
 
 Make sure MySQL server is active and you've already created a database;
 
-### Step one: 
+### 1.0.3. Step one: 
 
 Clone this repo 
 
@@ -22,17 +22,17 @@ and then run
 
 ```composer install```
 
-### Step two:
+### 1.0.4. Step two:
 
 Make changes to .env.example and and save it as .evn then run
 
 ```php artisan key:generate```
 
-### Step three:
+### 1.0.5. Step three:
 
 run ```php artisan migrate```
 
-### Step four:
+### 1.0.6. Step four:
  
  Start laravel developement server
  
