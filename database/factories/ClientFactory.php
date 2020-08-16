@@ -7,13 +7,13 @@ use Faker\Generator as Faker;
 
 $factory->define(Client::class, function (Faker $faker) {
 
-    $filepath = public_path('storage/uploads');
+    $filepath = storage_path('app/public/avatar');
 
     return [
         'company_name' => $faker->name,
         'profile_image' => $faker->image($filepath, 200, 200, null, false),
         'email' => $faker->unique()->safeEmail,
-        'password' => bcrypt(123456789),
+        'password' => bcrypt('password'),
         'created_at' => now()
     ];
 });

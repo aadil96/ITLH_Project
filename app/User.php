@@ -47,6 +47,17 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public const VALIDATE = [
+        'name' => ['required', 'string', 'max:255'],
+        'email' => [
+            'required',
+            'string',
+            'email',
+            'max:255',
+            'unique:users',
+        ],
+    ];
+
     public function batch()
     {
         return $this->belongsTo('App\Batch');
