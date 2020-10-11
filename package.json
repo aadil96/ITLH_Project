@@ -26,6 +26,7 @@
         "vue-template-compiler": "^2.6.10"
     },
     "dependencies": {
-        "serialize-javascript": "^3.0.0"
+        "serialize-javascript": "^3.0.0",
+        "tailwindcss": "^1.8.13"
     }
 }
