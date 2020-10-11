@@ -11,7 +11,7 @@ $factory->define(Client::class, function (Faker $faker) {
 
     return [
         'company_name' => $faker->name,
-        'profile_image' => $faker->image($filepath, 200, 200, null, false),
+        'profile_image' => $faker->name . '.png',
         'email' => $faker->unique()->safeEmail,
         'password' => bcrypt('password'),
         'created_at' => now()

@@ -1,0 +1,15 @@
+/**  Media Queries **/
+
+@media (min-width: 770px){
+    #nav-items{
+        display: block;
+    }
+}
+
+
+/** CSS for classes **/
+
+body {
+    background-color: white;
+}
+

@@ -13,8 +13,8 @@ $factory->define(App\User::class, function (Faker $faker) {
 		'name' => $faker->name,
 		'email' => $faker->email,
 		'phone' => null,
-		'profile_image_url' => $faker->image($filepath, 200, 200, null, false),
-		'cv_url' => $faker->image($filepath, 200, 200, null, false),
+		// 'profile_image_url' => $faker->image($filepath, 200, 200, null, false),
+		// 'cv_url' => $faker->image($filepath, 200, 200, null, false),
 		'competencies' => $faker->words(3, true),
 		'password' => bcrypt('password'),
 	];

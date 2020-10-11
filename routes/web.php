@@ -2,7 +2,6 @@
 
 /* Admin Routes */
 
-use PHPUnit\Framework\MockObject\Stub\ReturnStub;
 
 Route::prefix('admin')->group(function () {
 	Route::get('/', 'Admin\AdminController@index');
@@ -118,3 +117,7 @@ Route::get('create/{client}/assignment', function ($id) {
 });
 
 /* End */
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

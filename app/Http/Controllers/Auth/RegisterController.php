@@ -3,97 +3,71 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Providers\RouteServiceProvider;
 use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Http\Request;
-use App\Batch;
-use App\Client;
 
 class RegisterController extends Controller
 {
+    /*
+    |--------------------------------------------------------------------------
+    | Register Controller
+    |--------------------------------------------------------------------------
+    |
+    | This controller handles the registration of new users as well as their
+    | validation and creation. By default this controller uses a trait to
+    | provide this functionality without requiring any additional code.
+    |
+    */
+
     use RegistersUsers;
 
-    protected $redirectTo = '/home';
+    /**
+     * Where to redirect users after registration.
+     *
+     * @var string
+     */
+    protected $redirectTo = RouteServiceProvider::HOME;
 
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
     public function __construct()
     {
         $this->middleware('guest');
-        $this->middleware('guest:client');
     }
 
+    /**
+     * Get a validator for an incoming registration request.
+     *
+     * @param  array  $data
+     * @return \Illuminate\Contracts\Validation\Validator
+     */
     protected function validator(array $data)
     {
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
-            'email' => [
-                'required',
-                'string',
-                'email',
-                'max:255',
-                'unique:users',
-            ],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
     }
 
+    /**
+     * Create a new user instance after a valid registration.
+     *
+     * @param  array  $data
+     * @return \App\User
+     */
     protected function create(array $data)
     {
-        $user = new User();
-
-        if (request()->hasFile('cv') || request()->hasFile('profileImg')) {
-
-            $profileImage = $user->saveImageWithNameInPublicPath(request('cv'));
-
-            $cv = $user->saveImageWithNameInPublicPath(request('profileImg'));
-
-        } else {
-            $profileImage = null;
-            $cv = null;
-        }
-
         return User::create([
-            'batch_id' => $data['batch'],
             'name' => $data['name'],
             'email' => $data['email'],
-            'phone' => $data['phone'],
-            'profile_image_url' => $profileImage, // Store file path in database
-            'cv_url' => $cv, // Store file path in database
-            'competencies' => $data['cmpt'],
-            'password' => bcrypt($data['password']),
+            'password' => Hash::make($data['password']),
         ]);
-    }
-
-    public function showRegistrationForm()
-    {
-        $batch = Batch::get();
-
-        return view('auth.register', compact('batch'));
-    }
-
-    // Client Registration
-
-    public function showClientRegistrationForm()
-    {
-        return view('auth.clientRegister', ['url' => 'client']);
-    }
-
-    public function addClient(Request $data)
-    {
-        $client = new Client();
-        if ($data->hasFile('profileImg')) {
-            $profileImage = $client->saveImageWithNameInPublicPath($data['profileImg']);
-        } else {
-            $profileImage = null;
-        }
-
-        Client::create([
-            'company_name' => $data['name'],
-            'profile_image' => $profileImage,
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
-        ]);
-
-        return redirect(route('client.login'));
     }
 }
