@@ -15,7 +15,7 @@
         "laravel/scout": "^7.2",
         "laravel/telescope": "^3.0",
         "laravel/tinker": "^2.0",
-        "laravel/ui": "^2.0",
+        "laravel/ui": "2.0",
         "livewire/livewire": "^2.2",
         "rtconner/laravel-tagging": "^3.2"
     },
