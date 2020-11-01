@@ -26,19 +26,18 @@ Route::prefix('admin')->group(function () {
 //     dd($assignment);
 // });
 
-Auth::routes();
+Auth::routes(['logout' => false]);
 
 /* Freelancer Routes */
 
 Route::prefix('/')->group(function () {
-	Route::get('/', 'HomeController@index')->name('home');
-	Route::get('home', 'HomeController@show')->name('freelancer.home');
+	Route::get('/', 'HomeController@index')->name('home');	// Route::get('home', 'HomeController@show')->name('freelancer.home');
 	Route::get('profile/{user}', 'HomeController@profile')
 		->name('freelancer.profile')
 		->middleware('auth:web,client,admin');
 	Route::get('profile/{user}/edit', 'HomeController@showEditPage')->name('freelancer.edit');
 	Route::post('profile/{user}/edit', 'HomeController@update')->name('freelancer.edit');
-	Route::get('/logout', 'HomeController@logout');
+	Route::get('logout', 'Auth\LoginController@logout');
 });
 
 /* End */
@@ -86,8 +85,7 @@ Route::prefix('assignment/{assignment}/proposal')->group(function () {
 		'proposal.post'
 	);
 	Route::post('post', 'ProposalsController@create');
-	Route::post(
-		'{proposal}/approve',
+	Route::post('{proposal}/approve',
 		'ProposalsController@approve'
 	)->middleware('auth:client');
 	Route::post('{proposal}/reject', 'ProposalsController@reject')->middleware(
@@ -118,6 +116,5 @@ Route::get('create/{client}/assignment', function ($id) {
 
 /* End */
 
-Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+// Route::get('/home', 'LoginController@index')->nam('home');

@@ -23,6 +23,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $assignments = \App\Assignment::paginate(10);
+        return view('freelancerPartials.freelancer', compact('assignments'));
     }
 }

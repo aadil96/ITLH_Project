@@ -20,6 +20,7 @@ window.Vue = require('vue');
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 Vue.component('navbar-component', require('./components/NavBarComponent.vue').default);
+Vue.component('welcome-message', require('./components/WelcomeMessageComponent.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -30,3 +31,7 @@ Vue.component('navbar-component', require('./components/NavBarComponent.vue').de
 const app = new Vue({
     el: '#app',
 });
+
+const root = new Vue({
+    el: '#root',
+    });

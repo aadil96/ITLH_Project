@@ -31,10 +31,13 @@
             <div class="card-header">Feed</div>
             <div class="card-body">
 
-                <!-- Seacrh Bar -->
-
-                @if( isset($greet))
-                {{ $greet }}
+                @if(Session::has('welcomeMsg'))
+                @php
+                    $msg = Session::get('welcomeMsg')
+                @endphp
+                    <div id="root">
+                    <welcome-message :title="'{{ $msg['title'] }}'" :body="'{{ $msg['body'] }}'"></welcome-message>
+                    </div>
                 @endif
 
                 <form class="form-group mt-3" action="/home" method="get">
