@@ -17,14 +17,14 @@
         "laravel/tinker": "^2.0",
         "laravel/ui": "2.0",
         "livewire/livewire": "^2.2",
+        "phpunit/phpunit": "8.5.8",
         "rtconner/laravel-tagging": "^3.2"
     },
     "require-dev": {
         "facade/ignition": "^2.0",
         "fzaninotto/faker": "^1.4",
         "mockery/mockery": "^1.0",
-        "nunomaduro/collision": "^4.1",
-        "phpunit/phpunit": "^8.5"
+        "nunomaduro/collision": "^4.1"
     },
     "config": {
         "optimize-autoloader": true,

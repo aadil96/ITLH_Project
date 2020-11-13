@@ -37736,13 +37736,13 @@ var render = function() {
         "div",
         {
           staticClass:
-            "p-2 bg-indigo-800 items-center text-indigo-100 leading-none lg:rounded-full flex lg:inline-flex",
+            "p-2 bg-teal-800 items-center text-indigo-100 leading-none lg:rounded-full flex lg:inline-flex",
           attrs: { role: "alert" }
         },
         [
           _c("span", {
             staticClass:
-              "flex rounded-full bg-indigo-500 uppercase px-2 py-1 text-xs font-bold mr-3",
+              "flex rounded-full bg-teal-500 uppercase px-2 py-1 text-xs font-bold mr-3",
             domProps: { innerHTML: _vm._s(_vm.title) }
           }),
           _vm._v(" "),

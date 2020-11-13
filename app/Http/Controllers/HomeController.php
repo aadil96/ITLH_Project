@@ -11,10 +11,10 @@ class HomeController extends Controller
      *
      * @return void
      */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
+//    public function __construct()
+//    {
+//        $this->middleware('auth');
+//    }
 
     /**
      * Show the application dashboard.
@@ -23,7 +23,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $assignments = \App\Assignment::paginate(10);
-        return view('freelancerPartials.freelancer', compact('assignments'));
+        return view('home');
     }
 }

@@ -20,7 +20,8 @@
     </script>
     <script src="https://use.fontawesome.com/59150fa147.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet"> --}}
-
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/app.css') }}">
     <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
 </head>
@@ -48,9 +49,9 @@
     <div id="app">
         <navbar-component></navbar-component>
     </div>
-    <div class='mt-5'>
+{{--    <div class='mt-5'>--}}
         @yield('content')
-    </div>
+{{--    </div>--}}
     <script src="{{ asset('js/app.js')}}"></script>
 </body>
 
